@@ -86,7 +86,7 @@ final class Pasthis {
                     <option value='86400'>1 day</option>
                     <option value='2678400'>1 month</option>
                     <option value='31536000'>1 year</option>
-                    <option value='-1' selected='selected'>eternal</option>
+                    <option value='-1'>eternal</option>
                 </select>
                 <input type='text' id='ricard' name='ricard' placeholder='Do not fill me!'
                         type='hidden' />

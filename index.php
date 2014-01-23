@@ -156,11 +156,12 @@ final class Pasthis {
         if ($fail) {
             $this->add_content ("Meh, no paste for this id :<");
         } elseif (!$raw) {
-            $this->add_content ('<pre class="prettyprint">'
-                    .htmlspecialchars ($result['paste']).'</pre>');
+            $this->add_content ('<pre class="prettyprint">'.
+                    htmlspecialchars ($result['paste']).'</pre>');
             $this->add_content ('<div><a href="./">New paste</a></div>');
         } else {
-            print $result['paste'];
+            print '<pre style="white-space:pre-wrap;word-wrap: break-word;">'.
+                    htmlentities ($result['paste']).'</pre>';
             exit ();
         }
         

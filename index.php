@@ -4,17 +4,17 @@
  *
  * Copyright (C) 2014 Julien (jvoisin) Voisin - dustri.org
  * Copyright (C) 2014 Antoine Tenart <atenart@n0.pe>
- * 
+ *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
  * as published by the Free Software Foundation; either version 2
  * of the License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
@@ -103,7 +103,7 @@ final class Pasthis {
                 WHERE id='".$uniqid."';"
             );
         } while (!is_null ($result));
-        
+
         return $uniqid;
     }
 
@@ -111,37 +111,37 @@ final class Pasthis {
         if (isset ($_POST['ricard']) and $_POST['ricard'] != '')
             /* die, just die */
             die ();
-            
+
         $paste = SQLite3::escapeString ($paste);
         $deletion_date = intval ($deletion_date);
 
         if ($deletion_date > 0)
             $deletion_date += time ();
-            
+
         $uniqid = $this->generate_id ();
-        
+
         $this->db->query ("INSERT INTO pastes (id, deletion_date, paste)
                 VALUES ('".$uniqid."','".$deletion_date."','".$paste."');");
-        
+
         $this->add_content (
             "<ul>
                 <a href='?p=".$uniqid."'>".$uniqid."</a>
                 (raw:<a href='?p=".$uniqid."@raw'>".$uniqid."@raw</a>)
             </ul>"
         );
-    
+
         $this->render ();
     }
-    
+
     function show_paste ($id, $raw) {
         $id = SQLite3::escapeString ($id);
         $raw = intval ($raw);
-        
+
         $fail = false;
         $request = $this->db->query ("SELECT * FROM pastes WHERE id='".$id."';");
-        
+
         $result = $request->fetchArray ();
-        
+
         if (is_null ($result)) {
             $fail = true;
         } elseif ($result['deletion_date'] < time ()
@@ -152,7 +152,7 @@ final class Pasthis {
             if ($result['deletion_date'] != 0)
                 $fail = true;
         }
-            
+
         if ($fail) {
             $this->add_content ("Meh, no paste for this id :<");
         } elseif (!$raw) {
@@ -164,10 +164,10 @@ final class Pasthis {
             print $result['paste'];
             exit ();
         }
-        
+
         $this->render ();
     }
-    
+
     function cron () {
         $this->db->exec (
             "DELETE FROM pastes

@@ -75,7 +75,6 @@ final class Pasthis {
     function prompt_paste () {
         $this->add_content (
             "<form method='post' action='.'>
-                <textarea autofocus required name='p'></textarea>
                 <label for='d'>Expiration: </label>
                 <select required name='d'>
                     <option value='0'>burn after reading</option>
@@ -89,6 +88,7 @@ final class Pasthis {
                 <input type='text' id='ricard' name='ricard' placeholder='Do not fill me!'
                         type='hidden' />
                 <input type='submit' value='Send paste'>
+                <textarea autofocus required name='p'></textarea>
             </form>"
         );
 

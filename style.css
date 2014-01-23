@@ -1,0 +1,13 @@
+body {
+    padding: 5%;
+    text-align: center;
+}
+
+textarea {
+    width: 75%;
+    height: 75%;
+}
+
+#ricard {
+    display: none;
+}

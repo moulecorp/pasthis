@@ -43,7 +43,6 @@ final class Pasthis {
                 paste BLOB
             );"
         );
-        $this->add_content ('<a href=".">New paste</a>');
     }
 
     function add_content ($content, $prepend = false) {
@@ -57,6 +56,7 @@ final class Pasthis {
         print '<html>';
         print '<head>';
         print '<title>'.htmlentities ($this->title).'</title>';
+        print '<link href="./style.css" media="all" rel="stylesheet" type="text/css" />';
         print '</head>';
         print '<body>';
         while (list (, $ct) = each ($this->contents))
@@ -69,19 +69,21 @@ final class Pasthis {
     function prompt_paste () {
         $this->add_content (
             "<form method='post' action='.'>
+                <div>
+                <textarea autofocus required name='p'></textarea>
+                </div>
                 <label for='d'>Expiration: </label>
-                <select name='d'>
+                <select required name='d'>
                     <option value='0'>burn after reading</option>
                     <option value='600'>10 minutes</option>
-                    <option value='3600'>1 hour</option>
+                    <option value='3600' selected='selected'>1 hour</option>
                     <option value='86400'>1 day</option>
                     <option value='2678400'>1 month</option>
                     <option value='31536000'>1 year</option>
                     <option value='-1' selected='selected'>eternal</option>
                 </select>
-                <input type='text' name='ricard' placeholder='Do not fill me!'
+                <input type='text' id='ricard' name='ricard' placeholder='Do not fill me!'
                         type='hidden' />
-                <textarea name='p'></textarea>
                 <input type='submit' value='Send paste'>
             </form>"
         );
@@ -117,9 +119,13 @@ final class Pasthis {
         $this->db->query ("INSERT INTO pastes (id, deletion_date, paste)
                 VALUES ('".$uniqid."','".$deletion_date."','".$paste."');");
         
-        $this->add_content ('id: <a href="?p='.$uniqid.'">'.$uniqid.'</a>');
-        $this->add_content ('id (raw): <a href="?p='.$uniqid.'@raw">'.
-                $uniqid.'@raw</a>');
+        $this->add_content ("
+            <ul>
+                <a href='?p=".$uniqid."'>".$uniqid."</a>
+                (raw:<a href='?p=".$uniqid."@raw'>".$uniqid."@raw</a>)
+            </ul>
+            ");
+    
         $this->render ();
     }
     
@@ -146,8 +152,9 @@ final class Pasthis {
         if ($fail) {
             $this->add_content ("Meh, no paste for this id :<");
         } elseif (!$raw) {
-            $this->add_content ('<textarea>'.htmlspecialchars ($result['paste']).
-                    '</textarea>');
+            $this->add_content ('<textarea readonly="readonly">'
+                .htmlspecialchars ($result['paste']).'</textarea>');
+            $this->add_content ('<div><a href="./">New paste</a></div>');
         } else {
             print $result['paste'];
             exit ();

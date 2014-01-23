@@ -8,6 +8,10 @@ textarea {
     height: 75%;
 }
 
+pre {
+    width: 75%;
+}
+
 #ricard {
     display: none;
 }

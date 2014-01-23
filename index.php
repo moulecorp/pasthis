@@ -132,7 +132,7 @@ final class Pasthis {
         
         $result = $request->fetchArray ();
         
-        if ($result == null) {
+        if (is_null ($result)) {
             $fail = true;
         } elseif ($result['deletion_date'] < time ()
                 and $result['deletion_date'] != -1) {

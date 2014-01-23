@@ -31,5 +31,4 @@
 
 ## TODO:
   - A cli application
-  - Basic CSS
   - .htaccess/routing

@@ -96,7 +96,7 @@ final class Pasthis {
 
         $this->render ();
     }
-    
+
     private function generate_id () {
         do {
             $uniqid = substr (uniqid (), -6);
@@ -125,12 +125,12 @@ final class Pasthis {
         $this->db->query ("INSERT INTO pastes (id, deletion_date, paste)
                 VALUES ('".$uniqid."','".$deletion_date."','".$paste."');");
         
-        $this->add_content ("
-            <ul>
+        $this->add_content (
+            "<ul>
                 <a href='?p=".$uniqid."'>".$uniqid."</a>
                 (raw:<a href='?p=".$uniqid."@raw'>".$uniqid."@raw</a>)
-            </ul>
-            ");
+            </ul>"
+        );
     
         $this->render ();
     }
@@ -159,7 +159,7 @@ final class Pasthis {
             $this->add_content ("Meh, no paste for this id :<");
         } elseif (!$raw) {
             $this->add_content ('<pre class="prettyprint">'
-                .htmlspecialchars ($result['paste']).'</pre>');
+                    .htmlspecialchars ($result['paste']).'</pre>');
             $this->add_content ('<div><a href="./">New paste</a></div>');
         } else {
             print $result['paste'];

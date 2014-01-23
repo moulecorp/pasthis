@@ -46,6 +46,10 @@ final class Pasthis {
         $this->add_content ('<a href=".">New paste</a>');
     }
 
+    function __destruct () {
+        $this->db->close ();
+    }
+
     function add_content ($content, $prepend = false) {
         if (!$prepend)
             $this->contents[] = $content;

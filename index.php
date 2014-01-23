@@ -160,8 +160,8 @@ final class Pasthis {
                     htmlspecialchars ($result['paste']).'</pre>');
             $this->add_content ('<div><a href="./">New paste</a></div>');
         } else {
-            print '<pre style="white-space:pre-wrap;word-wrap: break-word;">'.
-                    htmlentities ($result['paste']).'</pre>';
+            header ("Content-Type: text/plain");
+            print $result['paste'];
             exit ();
         }
         

@@ -60,11 +60,13 @@ final class Pasthis {
         print '<html>';
         print '<head>';
         print '<title>'.htmlentities ($this->title).'</title>';
-        print '<link href="./style.css" media="all" rel="stylesheet" type="text/css" />';
+        print '<link href="./prettify.css" rel="stylesheet" type="text/css" />';
+        print '<link href="./style.css" rel="stylesheet" type="text/css" />';
         print '</head>';
-        print '<body>';
+        print '<body onload="prettyPrint()">';
         while (list (, $ct) = each ($this->contents))
             print $ct;
+        print '<script src="./js/prettify.js"></script>';
         print '</body>';
         print '</html>';
         exit ();
@@ -156,8 +158,8 @@ final class Pasthis {
         if ($fail) {
             $this->add_content ("Meh, no paste for this id :<");
         } elseif (!$raw) {
-            $this->add_content ('<textarea readonly="readonly">'
-                .htmlspecialchars ($result['paste']).'</textarea>');
+            $this->add_content ('<pre class="prettyprint">'
+                .htmlspecialchars ($result['paste']).'</pre>');
             $this->add_content ('<div><a href="./">New paste</a></div>');
         } else {
             print $result['paste'];

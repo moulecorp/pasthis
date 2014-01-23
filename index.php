@@ -32,9 +32,9 @@ final class Pasthis {
                 SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
         if (is_null ($this->db)) {
             if (file_exists('pathis.db'))
-                die ("Impossible to open, check permissions");
+                die ("Unable to open database, check permissions");
             else
-                die ("Impossible to create, check permissions");
+                die ("Unable to create database, check permissions");
         }
         $this->db->query (
             "CREATE TABLE if not exists pastes (

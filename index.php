@@ -76,7 +76,7 @@ final class Pasthis {
         $this->add_content (
             "<form method='post' action='.'>
                 <label for='d'>Expiration: </label>
-                <select required name='d'>
+                <select required name='d' id='d'>
                     <option value='0'>burn after reading</option>
                     <option value='600'>10 minutes</option>
                     <option value='3600' selected='selected'>1 hour</option>
@@ -85,8 +85,7 @@ final class Pasthis {
                     <option value='31536000'>1 year</option>
                     <option value='-1'>eternal</option>
                 </select>
-                <input type='text' id='ricard' name='ricard' placeholder='Do not fill me!'
-                        type='hidden' />
+                <input type='text' id='ricard' name='ricard' placeholder='Do not fill me!'/>
                 <input type='submit' value='Send paste'>
                 <textarea autofocus required name='p'></textarea>
             </form>"

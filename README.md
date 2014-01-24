@@ -1,8 +1,8 @@
 # *Pasthis*
 
 ## Stupid Simple Pastebin
-Pasthis is a simple pastebin written in php and using
-[sqlite](https://sqlite.org/) as database backend.
+Pasthis is a simple pastebin written in [php](https://www.php.net/)
+and using [sqlite](https://sqlite.org/) as database backend.
 
 ## Specifications:
   - Pasthis MUST supports color highlighting
@@ -32,7 +32,3 @@ Pasthis is a simple pastebin written in php and using
 		along with this program; if not, write to the Free Software
 		Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
 		02110-1301, USA.
-
-## TODO:
-  - A cli application
-  - .htaccess/routing

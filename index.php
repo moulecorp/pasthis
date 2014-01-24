@@ -61,8 +61,8 @@ final class Pasthis {
         print '<html>';
         print '<head>';
         print '<title>'.htmlentities ($this->title).'</title>';
-        print '<link href="./prettify.css" rel="stylesheet" type="text/css" />';
-        print '<link href="./style.css" rel="stylesheet" type="text/css" />';
+        print '<link href="./css/prettify.css" rel="stylesheet" type="text/css" />';
+        print '<link href="./css/style.css" rel="stylesheet" type="text/css" />';
         print '</head>';
         print '<body onload="prettyPrint()">';
         while (list (, $ct) = each ($this->contents))

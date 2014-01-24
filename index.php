@@ -57,6 +57,7 @@ final class Pasthis {
     }
 
     private function render () {
+        print '<!DOCTYPE html>';
         print '<html>';
         print '<head>';
         print '<title>'.htmlentities ($this->title).'</title>';
@@ -66,7 +67,6 @@ final class Pasthis {
         print '<body onload="prettyPrint()">';
         while (list (, $ct) = each ($this->contents))
             print $ct;
-        print '<script src="./js/prettify.js"></script>';
         print '</body>';
         print '</html>';
         exit ();
@@ -160,6 +160,7 @@ final class Pasthis {
             $this->add_content ('<pre class="prettyprint">'.
                     htmlspecialchars ($result['paste']).'</pre>');
             $this->add_content ('<div><a href="./">New paste</a></div>');
+            $this->add_content ('<script src="./js/prettify.js"></script>');
         } else {
             header ("Content-Type: text/plain");
             print $result['paste'];

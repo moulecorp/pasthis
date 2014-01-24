@@ -1,5 +1,9 @@
-# *Pasthis* - Stupid Simple Pastebin
-    
+# *Pasthis*
+
+## Stupid Simple Pastebin
+Pasthis is a simple pastebin written in php and using
+[sqlite](https://sqlite.org/) as database backend.
+
 ## Specifications:
   - Pasthis MUST supports color highlighting
   - Pasthis SHOULD be able to work without JS if necessary

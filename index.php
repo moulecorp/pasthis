@@ -84,7 +84,8 @@ final class Pasthis {
                     <option value='31536000'>1 year</option>
                     <option value='-1'>eternal</option>
                 </select>
-                <input type='text' id='ricard' name='ricard' placeholder='Do not fill me!'/>
+                <input type='text' id='ricard' name='ricard'
+                        placeholder='Do not fill me!' />
                 <input type='submit' value='Send paste'>
                 <textarea autofocus required name='p'></textarea>
             </form>"

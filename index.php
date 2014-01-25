@@ -61,7 +61,6 @@ final class Pasthis {
         print '<html>';
         print '<head>';
         print '<title>'.htmlentities ($this->title).'</title>';
-        print '<link href="./css/prettify.css" rel="stylesheet" type="text/css" />';
         print '<link href="./css/style.css" rel="stylesheet" type="text/css" />';
         print '</head>';
         print '<body onload="prettyPrint()">';
@@ -157,10 +156,10 @@ final class Pasthis {
         if ($fail) {
             $this->add_content ("Meh, no paste for this id :<");
         } elseif (!$raw) {
+            $this->add_content ('<script src="./js/prettify.js"></script>', true);
             $this->add_content ('<pre class="prettyprint">'.
                     htmlspecialchars ($result['paste']).'</pre>');
             $this->add_content ('<div><a href="./">New paste</a></div>');
-            $this->add_content ('<script src="./js/prettify.js"></script>');
         } else {
             header ("Content-Type: text/plain");
             print $result['paste'];

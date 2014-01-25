@@ -1,6 +1,14 @@
+html, body {
+    height: 80%;
+}
+
 body {
     padding: 5%;
     text-align: center;
+}
+
+form {
+    height: 100%;
 }
 
 textarea {

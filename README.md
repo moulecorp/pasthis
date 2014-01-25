@@ -14,6 +14,7 @@ and using [sqlite](https://sqlite.org/) as database backend.
   - Pasthis MUST have a way to delete outdated pastes without user intervention
   - Pasthis MUST allow the user to see the raw content
   - Pasthis MUST NOT store users IP in plain-text
+  - Pasthis MUST NOT depend on external services
 
 ## Implementation
 ## Anti-spam

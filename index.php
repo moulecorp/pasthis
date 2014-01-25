@@ -116,6 +116,15 @@ final class Pasthis {
 
     private function check_spammer() {
         $hashed_ip = sha1 ($_SERVER['REMOTE_ADDR']);
+
+        if (isset ($_POST['ricard']) and $_POST['ricard'] != '') {
+            // Block the spammer for ~72h
+            $this->db->exec ('INSERT OR REPLACE INTO users (hash,
+                last_paste, degree) VALUES ("'.$hashed_ip.'","'.
+                time ().'", 512);');
+            die("Spam.");
+        }
+
         $request = $this->db->query ("SELECT * FROM users WHERE
             hash='".$hashed_ip."';");
         $result = $request->fetchArray ();
@@ -123,23 +132,17 @@ final class Pasthis {
         if ($result === false) {
             $this->db->exec ("INSERT INTO users (hash, last_paste, degree)
                 VALUES ('".$hashed_ip."','".time ()."','1');");
-
         } elseif (time () < $result['last_paste'] + pow ($result['degree']+1, 2.5)) {
             $new_degree = $result['degree'] + 1;
             $this->db->exec ("UPDATE users SET degree="
                 .$new_degree." WHERE hash='".$result['hash']."';");
-            die("Spam."); //What to do?
-
+            die("Spam.");
         } else {
             $this->db->exec ("DELETE FROM users WHERE hash='".$result['hash']."';");
         }
     }
 
     function add_paste ($deletion_date, $paste) {
-        if (isset ($_POST['ricard']) and $_POST['ricard'] != '')
-            /* die, just die */
-            die ();
-
         $this->check_spammer();
 
         $paste = SQLite3::escapeString ($paste);

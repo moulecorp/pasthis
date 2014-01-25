@@ -14,6 +14,14 @@ and using [sqlite](https://sqlite.org/) as database backend.
   - Pasthis MUST have a way to delete outdated pastes without user intervention
   - Pasthis MUST allow the user to see the raw content
 
+## Implementation
+## Anti-spam
+1. If the hidden field is filled, the user is banned for ~72h.
+2. A simple almost-cubic throttle is used, to prevent burst-spam
+## Display
+The user can access the raw version of a paste by appending
+@raw to its id.
+
 ## Authors and License
  - Copyright (C) 2014 Julien (jvoisin) Voisin - dustri.org
  - Copyright (C) 2014 Antoine Tenart <atenart@n0.pe>

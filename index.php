@@ -53,7 +53,7 @@ final class Pasthis {
         if (!$prepend)
             $this->contents[] = $content;
         else
-            array_unshift ($this->content, $content);
+            array_unshift ($this->contents, $content);
     }
 
     private function render () {

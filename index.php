@@ -75,7 +75,7 @@ final class Pasthis {
         $this->add_content (
             "<form method='post' action='.'>
                 <label for='d'>Expiration: </label>
-                <select required name='d' id='d'>
+                <select name='d' id='d'>
                     <option value='0'>burn after reading</option>
                     <option value='600'>10 minutes</option>
                     <option value='3600' selected='selected'>1 hour</option>

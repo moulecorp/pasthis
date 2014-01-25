@@ -18,6 +18,7 @@ and using [sqlite](https://sqlite.org/) as database backend.
 ## Anti-spam
 1. If the hidden field is filled, the user is banned for ~72h.
 2. A simple almost-cubic throttle is used, to prevent burst-spam
+
 ## Display
 The user can access the raw version of a paste by appending
 @raw to its id.

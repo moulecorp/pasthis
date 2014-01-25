@@ -8,11 +8,12 @@ and using [sqlite](https://sqlite.org/) as database backend.
   - Pasthis MUST supports color highlighting
   - Pasthis SHOULD be able to work without JS if necessary
   - Pasthis MUST be lightweight
-  - Pasthis MUST not use clunky-javascript-powered-crypo
+  - Pasthis MUST NOT use clunky-javascript-powered-crypo
   - Pasthis SHOULD NOT use predictable (by a casual attacker) pastes url
   - Pasthis MUST deter trivial spam attacks
   - Pasthis MUST have a way to delete outdated pastes without user intervention
   - Pasthis MUST allow the user to see the raw content
+  - Pasthis MUST NOT store users IP in plain-text
 
 ## Implementation
 ## Anti-spam

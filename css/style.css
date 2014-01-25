@@ -14,7 +14,7 @@ textarea {
 pre {
     width: 75%;
     text-align: left;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 #ricard {

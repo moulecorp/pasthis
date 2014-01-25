@@ -43,6 +43,13 @@ final class Pasthis {
                 paste BLOB
             );"
         );
+        $this->db->query (
+            "CREATE TABLE if not exists users (
+                hash PRIMARY KEY,
+                last_paste TIMESTAMP,
+                degree INTEGER
+            );"
+        );
     }
 
     function __destruct () {
@@ -107,10 +114,33 @@ final class Pasthis {
         return $uniqid;
     }
 
+    private function check_spammer() {
+        $hashed_ip = sha1 ($_SERVER['REMOTE_ADDR']);
+        $request = $this->db->query ("SELECT * FROM users WHERE
+            hash='".$hashed_ip."';");
+        $result = $request->fetchArray ();
+
+        if ($result === false) {
+            $this->db->exec ("INSERT INTO users (hash, last_paste, degree)
+                VALUES ('".$hashed_ip."','".time ()."','1');");
+
+        } elseif (time () < $result['last_paste'] + pow ($result['degree']+1, 2.5)) {
+            $new_degree = $result['degree'] + 1;
+            $this->db->exec ("UPDATE users SET degree="
+                .$new_degree." WHERE hash='".$result['hash']."';");
+            die("Spam."); //What to do?
+
+        } else {
+            $this->db->exec ("DELETE FROM users WHERE hash='".$result['hash']."';");
+        }
+    }
+
     function add_paste ($deletion_date, $paste) {
         if (isset ($_POST['ricard']) and $_POST['ricard'] != '')
             /* die, just die */
             die ();
+
+        $this->check_spammer();
 
         $paste = SQLite3::escapeString ($paste);
         $deletion_date = intval ($deletion_date);
@@ -178,6 +208,7 @@ final class Pasthis {
              AND deletion_date != -1
              AND date('now') > deletion_date;"
         );
+        $this->db->exec ("DELETE FROM users");
     }
 }
 

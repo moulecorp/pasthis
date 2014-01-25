@@ -36,6 +36,7 @@ final class Pasthis {
             else
                 die ("Unable to create database, check permissions");
         }
+        $this->db->exec ('pragma auto_vacuum = 1');
         $this->db->query (
             "CREATE TABLE if not exists pastes (
                 id PRIMARY KEY,

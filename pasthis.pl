@@ -85,7 +85,7 @@ $mech->post (
 );
 
 my $id = $mech->find_link (url_abs_regex => qr/\?p=/, n => 1)->text ();
-print "paste:\t".$url.'/?p='.$id."\n";
-print "raw:\t".$url.'/?p='.$id."\@raw\n";
+print "paste:\t".$url.'/'.$id."\n";
+print "raw:\t".$url.'/'.$id."\@raw\n";
 
 1;

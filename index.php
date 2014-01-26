@@ -159,8 +159,8 @@ final class Pasthis {
 
         $this->add_content (
             "<ul>
-                <a href='?p=".$uniqid."'>".$uniqid."</a>
-                (raw:<a href='?p=".$uniqid."@raw'>".$uniqid."@raw</a>)
+                <a href='./".$uniqid."'>".$uniqid."</a>
+                (raw:<a href='./".$uniqid."@raw'>".$uniqid."@raw</a>)
             </ul>"
         );
 

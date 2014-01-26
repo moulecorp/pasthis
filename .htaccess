@@ -1,0 +1,11 @@
+<IfModule !mod_rewrite.c>
+	Redirect 500
+</IfModule>
+
+<IfModule mod_rewrite.c>
+	RewriteEngine on
+	#RewriteBase /pasthis
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^([a-zA-ZZ0-9]{6}(@raw)?)$ index.php?p=$1 [L]
+</IfModule>

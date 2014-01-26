@@ -84,6 +84,8 @@ $mech->post (
 	]
 );
 
+die ('Error while sending paste to pasthis at '.$url) unless $mech->success ();
+
 my $id = $mech->find_link (url_abs_regex => qr/\?p=/, n => 1)->text ();
 print "paste:\t".$url.'/'.$id."\n";
 print "raw:\t".$url.'/'.$id."\@raw\n";

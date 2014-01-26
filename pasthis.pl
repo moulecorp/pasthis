@@ -44,7 +44,7 @@ Usage:\t$0 [OPTIONS] STDIN
 
 OPTIONS
 \t--url URL\t\tSend paste to pasthis located at URL.
-\t--expire EXPIRATION\tDelete paste after EXPIRATION. Defaults to 1h.
+\t--expire EXPIRATION\tDelete paste after EXPIRATION. Defaults to 1d.
 \t--help\t\t\tPrint this help.
 
 EXPIRATION
@@ -79,7 +79,7 @@ my %expirations = (
 $mech->post (
 	$url,
 	[
-		'd' => defined ($expirations{$expire}) ? $expirations{$expire} : 3600,
+		'd' => defined ($expirations{$expire}) ? $expirations{$expire} : 86400,
 		'p' => defined ($file_content) ? $file_content : <STDIN>,
 	]
 );

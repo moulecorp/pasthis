@@ -87,8 +87,8 @@ final class Pasthis {
                 <select name='d' id='d'>
                     <option value='0'>burn after reading</option>
                     <option value='600'>10 minutes</option>
-                    <option value='3600' selected='selected'>1 hour</option>
-                    <option value='86400'>1 day</option>
+                    <option value='3600'>1 hour</option>
+                    <option value='86400' selected='selected'>1 day</option>
                     <option value='2678400'>1 month</option>
                     <option value='31536000'>1 year</option>
                     <option value='-1'>eternal</option>

@@ -1,3 +1,7 @@
+<Files pasthis.db>
+	Deny from all
+</Files>
+
 <IfModule !mod_rewrite.c>
 	Redirect 500
 </IfModule>

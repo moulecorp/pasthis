@@ -25,6 +25,16 @@ pre {
     overflow-y: auto;
 }
 
+a {
+    color: black;
+    font-size: 1.2em;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
 #ricard {
     display: none;
 }

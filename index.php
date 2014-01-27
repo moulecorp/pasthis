@@ -157,14 +157,7 @@ final class Pasthis {
         $this->db->query ("INSERT INTO pastes (id, deletion_date, paste)
                 VALUES ('".$uniqid."','".$deletion_date."','".$paste."');");
 
-        $this->add_content (
-            "<ul>
-                <a href='./".$uniqid."'>".$uniqid."</a>
-                (raw:<a href='./".$uniqid."@raw'>".$uniqid."@raw</a>)
-            </ul>"
-        );
-
-        $this->render ();
+        header ('location: ./'.$uniqid);
     }
 
     function show_paste ($id, $raw) {

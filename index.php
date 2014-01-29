@@ -183,7 +183,8 @@ final class Pasthis {
         }
 
         if ($fail) {
-            $this->add_content ("Meh, no paste for this id :<");
+            $this->add_content ("<p>Meh, no paste for this id :(</p>");
+            $this->prompt_paste ();
         } elseif (!$raw) {
             $this->add_content ('<script>window.onload=function(){prettyPrint();}</script>');
             $this->add_content ('<script src="./js/prettify.js"></script>', true);

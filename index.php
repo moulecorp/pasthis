@@ -57,7 +57,7 @@ final class Pasthis {
         $this->db->close ();
     }
 
-    function add_content ($content, $prepend = false) {
+    private function add_content ($content, $prepend = false) {
         if (!$prepend)
             $this->contents[] = $content;
         else

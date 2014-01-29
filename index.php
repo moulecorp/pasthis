@@ -80,6 +80,47 @@ final class Pasthis {
         exit ();
     }
 
+    private function remaining_time ($destruction) {
+        $ret = 'This paste will ';
+        if ($destruction === -1) {
+            return $ret.'never expire';
+        } else {
+            $ret = $ret.'expire in';
+        }
+        $remaining = $destruction - time ();
+
+        $years = (int)($remaining / 31536000);
+        if ($years > 0) {
+            $ret = $ret." $years year".($years>1?"s":"");
+            $remaining = $remaining % 31536000;
+        }
+
+        $months = (int)($remaining / 2678400);
+        if ($months > 0) {
+            $ret = $ret." $months month".($months>1?"s":"");
+            $remaining = $remaining % 2678400;
+        }
+
+        $days = (int)($remaining / 86400);
+        if ($days > 0) {
+            $ret = $ret." $days day".($days>1?"s":"");
+            $remaining = $remaining % 86400;
+        }
+
+        $hours = (int)($remaining / 3600);
+        if ($hours > 0) {
+            $ret = $ret." $hours hour".($hours>1?"s":"");
+            $remaining = $remaining % 3600;
+        }
+
+        $minutes = (int)($remaining / 60);
+        if ($hours > 0) {
+            $ret = $ret." $minutes minute".($minutes>1?"s":"");
+        }
+
+        return $ret.".";
+    }
+
     function prompt_paste () {
         $this->add_content (
             "<form method='post' action='.'>
@@ -192,6 +233,7 @@ final class Pasthis {
                                 '<a href="./">New paste</a></div>');
             $this->add_content ('<pre class="prettyprint">'.
                     htmlspecialchars ($result['paste']).'</pre>');
+            $this->add_content ($this->remaining_time ($result['deletion_date']));
         } else {
             header ("Content-Type: text/plain");
             print $result['paste'];

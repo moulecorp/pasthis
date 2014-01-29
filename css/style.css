@@ -20,6 +20,12 @@ textarea {
     border-radius: 8px;
     border: 1px solid gray;
     padding: 1em;
+    outline: none;
+}
+
+textarea:focus {
+    border: 0;
+    box-shadow: 0 0 1px 1px grey;
 }
 
 pre {

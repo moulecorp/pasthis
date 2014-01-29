@@ -16,7 +16,10 @@ textarea {
     margin: auto;
     margin-top: 1em;
     width: 75%;
-    height: 75%;
+    min-height: 75%;
+    border-radius: 4px;
+    border: 1px solid gray;
+    padding: 1em;
 }
 
 pre {

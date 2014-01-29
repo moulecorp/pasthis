@@ -140,6 +140,7 @@ final class Pasthis {
                 <textarea autofocus required name='p'></textarea>
             </form>"
         );
+        $this->add_content ('<script src="./js/textarea.js"></script>');
 
         $this->render ();
     }

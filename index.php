@@ -188,10 +188,10 @@ final class Pasthis {
         } elseif (!$raw) {
             $this->add_content ('<script>window.onload=function(){prettyPrint();}</script>');
             $this->add_content ('<script src="./js/prettify.js"></script>', true);
+            $this->add_content ('<div><a href="./'.$id.'@raw">Raw</a> - '.
+                                '<a href="./">New paste</a></div>');
             $this->add_content ('<pre class="prettyprint">'.
                     htmlspecialchars ($result['paste']).'</pre>');
-            $this->add_content ('<div><a href="./'.$id.'@raw">Raw</a> - ' .
-                                '<a href="./">New paste</a></div>');
         } else {
             header ("Content-Type: text/plain");
             print $result['paste'];

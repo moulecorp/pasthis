@@ -47,7 +47,7 @@ final class Pasthis {
         $this->db->query (
             "CREATE TABLE if not exists users (
                 hash PRIMARY KEY,
-                last_paste TIMESTAMP,
+                nopaste_period TIMESTAMP,
                 degree INTEGER
             );"
         );
@@ -140,32 +140,32 @@ final class Pasthis {
         return $uniqid;
     }
 
-    private function check_spammer() {
-        $hashed_ip = sha1 ($_SERVER['REMOTE_ADDR']);
+    private function nopaste_period ($degree) {
+        return time () + intval (pow ($degree, 2.5));
+    }
 
-        if (isset ($_POST['ricard']) and $_POST['ricard'] != '') {
-            // Block the spammer for ~72h
-            $this->db->exec ('INSERT OR REPLACE INTO users (hash,
-                last_paste, degree) VALUES ("'.$hashed_ip.'","'.
-                time ().'", 512);');
-            die("Spam.");
-        }
+    private function check_spammer () {
+        $hash = sha1 ($_SERVER['REMOTE_ADDR']);
 
-        $request = $this->db->query ("SELECT * FROM users WHERE
-            hash='".$hashed_ip."';");
-        $result = $request->fetchArray ();
+        $result = $this->db->querySingle (
+            "SELECT * FROM users
+             WHERE hash='".$hash."';",
+            true
+        );
 
-        if ($result === false) {
-            $this->db->exec ("INSERT INTO users (hash, last_paste, degree)
-                VALUES ('".$hashed_ip."','".time ()."','1');");
-        } elseif (time () < $result['last_paste'] + pow ($result['degree']+1, 2.5)) {
-            $new_degree = $result['degree'] + 1;
-            $this->db->exec ("UPDATE users SET degree="
-                .$new_degree." WHERE hash='".$result['hash']."';");
-            die("Spam.");
-        } else {
-            $this->db->exec ("DELETE FROM users WHERE hash='".$result['hash']."';");
-        }
+        $in_period = (!empty ($result) and time () < $result['nopaste_period']);
+        $obvious_spam = (!isset ($_POST['ricard']) or !empty ($_POST['ricard']));
+
+        $degree = $in_period ? $result['degree']+1 : ($obvious_spam ? 512 : 1);
+
+        $this->db->exec (
+            "INSERT OR REPLACE INTO users
+             (hash, nopaste_period, degree)
+             VALUES ('".$hash."','".$this->nopaste_period ($degree)."','".$degree."');"
+        );
+
+        if ($in_period or $obvious_spam)
+            die ('Spam');
     }
 
     function add_paste ($deletion_date, $paste) {
@@ -232,9 +232,10 @@ final class Pasthis {
             "DELETE FROM pastes
              WHERE deletion_date != 0
              AND deletion_date != -1
-             AND date('now') > deletion_date;"
+             AND date('now') > deletion_date;
+             DELETE FROM users
+             WHERE date('now') > nopaste_period;"
         );
-        $this->db->exec ("DELETE FROM users");
     }
 }
 

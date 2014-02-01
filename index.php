@@ -94,8 +94,11 @@ final class Pasthis {
             $ret .= $format ($interval->d, 'day');
             if ($interval->m === 0) {
                 $ret .= $format ($interval->h, 'hour');
-                if ($interval->d === 0)
-                    $ret .= $format ($interval->i, 'minute').$format ($interval->s, 'second');
+                if ($interval->d === 0) {
+                    $ret .= $format ($interval->i, 'minute');
+                    if ($interval->h === 0)
+                        $ret .= $format ($interval->s, 'second');
+                }
             }
         }
         return rtrim ($ret).'.';

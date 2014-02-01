@@ -80,45 +80,21 @@ final class Pasthis {
         exit ();
     }
 
-    private function remaining_time ($destruction) {
-        $ret = 'This paste will ';
-        if ($destruction === -1) {
-            return $ret.'never expire';
-        } else {
-            $ret = $ret.'expire in';
-        }
-        $remaining = $destruction - time ();
+    private function remaining_time ($timestamp) {
+        if ($timestamp === -1)
+            return 'Never expires.';
 
-        $years = (int)($remaining / 31536000);
-        if ($years > 0) {
-            $ret = $ret." $years year".($years>1?"s":"");
-            $remaining = $remaining % 31536000;
-        }
+        $format = function ($t,$s) { return $t ? $t.' '.$s.($t>1 ? 's' : '' ).' ' : ''; };
 
-        $months = (int)($remaining / 2678400);
-        if ($months > 0) {
-            $ret = $ret." $months month".($months>1?"s":"");
-            $remaining = $remaining % 2678400;
-        }
+        $expiration = new DateTime ('@'.$timestamp);
+        $interval = $expiration->diff (new DateTime (), true);
 
-        $days = (int)($remaining / 86400);
-        if ($days > 0) {
-            $ret = $ret." $days day".($days>1?"s":"");
-            $remaining = $remaining % 86400;
-        }
-
-        $hours = (int)($remaining / 3600);
-        if ($hours > 0) {
-            $ret = $ret." $hours hour".($hours>1?"s":"");
-            $remaining = $remaining % 3600;
-        }
-
-        $minutes = (int)($remaining / 60);
-        if ($hours > 0) {
-            $ret = $ret." $minutes minute".($minutes>1?"s":"");
-        }
-
-        return $ret.".";
+        return 'Expires in ' . $format ($interval->y, 'year') .
+                $format ($interval->m, 'month')               .
+                $format ($interval->d, 'day')                 .
+                $format ($interval->h, 'hour')                .
+                $format ($interval->i, 'minute')              .
+                $format ($interval->s, 'second');
     }
 
     function prompt_paste () {

@@ -89,12 +89,16 @@ final class Pasthis {
         $expiration = new DateTime ('@'.$timestamp);
         $interval = $expiration->diff (new DateTime (), true);
 
-        return 'Expires in ' . $format ($interval->y, 'year') .
-                $format ($interval->m, 'month')               .
-                $format ($interval->d, 'day')                 .
-                $format ($interval->h, 'hour')                .
-                $format ($interval->i, 'minute')              .
-                $format ($interval->s, 'second');
+        $ret = 'Expires in '.$format ($interval->y, 'year').$format ($interval->m, 'month');
+        if ($interval->y === 0) {
+            $ret .= $format ($interval->d, 'day');
+            if ($interval->m === 0) {
+                $ret .= $format ($interval->h, 'hour');
+                if ($interval->d === 0)
+                    $ret .= $format ($interval->i, 'minute').$format ($interval->s, 'second');
+            }
+        }
+        return $ret;
     }
 
     function prompt_paste () {

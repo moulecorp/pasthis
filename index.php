@@ -98,7 +98,7 @@ final class Pasthis {
                     $ret .= $format ($interval->i, 'minute').$format ($interval->s, 'second');
             }
         }
-        return $ret;
+        return rtrim ($ret).'.';
     }
 
     function prompt_paste () {

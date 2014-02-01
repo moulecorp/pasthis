@@ -232,9 +232,9 @@ final class Pasthis {
             "DELETE FROM pastes
              WHERE deletion_date != 0
              AND deletion_date != -1
-             AND date('now') > deletion_date;
+             AND strftime ('%s','now') > deletion_date;
              DELETE FROM users
-             WHERE date('now') > nopaste_period;"
+             WHERE strftime ('%s','now') > nopaste_period;"
         );
     }
 }

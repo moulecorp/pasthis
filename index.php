@@ -109,7 +109,7 @@ final class Pasthis {
             "<form method='post' action='.'>
                 <label for='d'>Expiration: </label>
                 <select name='d' id='d'>
-                    <option value='0'>burn after reading</option>
+                    <option value='-2'>burn after reading</option>
                     <option value='600'>10 minutes</option>
                     <option value='3600'>1 hour</option>
                     <option value='86400' selected='selected'>1 day</option>
@@ -199,12 +199,18 @@ final class Pasthis {
         if ($result === false) {
             $fail = true;
         } elseif ($result['deletion_date'] < time ()
-                and $result['deletion_date'] != -1) {
+                and $result['deletion_date'] >= 0) {
             $this->db->exec ("DELETE FROM pastes WHERE id='".$id."';");
 
             /* do not fail on "burn after reading" pastes */
             if ($result['deletion_date'] != 0)
                 $fail = true;
+        } elseif ($result['deletion_date'] == -2) {
+            $this->db->exec (
+                "UPDATE pastes
+                 SET deletion_date=0
+                 WHERE id='".$id."';"
+            );
         }
 
         if ($fail) {
@@ -230,8 +236,7 @@ final class Pasthis {
     function cron () {
         $this->db->exec (
             "DELETE FROM pastes
-             WHERE deletion_date != 0
-             AND deletion_date != -1
+             WHERE deletion_date > 0
              AND strftime ('%s','now') > deletion_date;
              DELETE FROM users
              WHERE strftime ('%s','now') > nopaste_period;"

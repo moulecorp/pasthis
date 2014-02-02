@@ -67,7 +67,7 @@ if (defined ($file)) {
 }
 
 my %expirations = (
-	'burn'    => 0,
+	'burn'    => -2,
 	'10m'     => 600,
 	'1h'      => 3600,
 	'1d'      => 86400,

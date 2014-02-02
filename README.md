@@ -29,9 +29,9 @@ won't be displayed.
 ### Command line tool
 
 A [command line tool](https://github.com/jvoisin/pasthis/blob/master/pasthis.pl) is
-available and allows to send pastes from the console standard input (STDIN) or from
+available allowing you to send pastes from the console standard input (STDIN) or from
 a file. In order to take advantage of this tool, download it, make it executable and
-display the help output form more informations:
+display the help output for more information:
 
 		chmod +x ./pasthis.pl
 		./pasthis.pl --help

@@ -86,7 +86,7 @@ final class Pasthis {
         elseif ($timestamp === 0)
             return 'Expired.';
         elseif ($timestamp === -2)
-            return 'One remaining reading.';
+            return 'One reading remaining.';
 
         $format = function ($t,$s) { return $t ? $t.' '.$s.($t>1 ? 's' : '' ).' ' : ''; };
 

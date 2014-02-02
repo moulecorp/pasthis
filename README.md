@@ -34,6 +34,15 @@ to ~72h) if filled.
 The user can access the raw version of a paste by appending
 @raw to its id.
 
+## Deployment
+1. Download [pasthis](https://github.com/jvoisin/pasthis)
+2. Put it in a directory on your webserver
+3. Use the [.htaccess](https://github.com/jvoisin/pasthis/blob/master/.htaccess)
+or the [nginx](https://github.com/jvoisin/pasthis/blob/master/nginx.conf) depending of
+your configuration
+4. Make sure that the folder is _readable_ and _writable_ by www-data, since this is
+required by php to be able to create the sqlite database.
+
 ## Authors and License
  - Copyright (C) 2014 Julien (jvoisin) Voisin - dustri.org
  - Copyright (C) 2014 Antoine Tenart <atenart@n0.pe>

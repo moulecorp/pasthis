@@ -15,6 +15,12 @@ and using [sqlite](https://sqlite.org/) as database backend.
 4. Make sure that the folder is _readable_ and _writable_ by www-data, since this is
 required by php to be able to create the sqlite database
 
+It is recommanded to call the cron method on a regular basis to avoid an unwanted
+growing database and to delete expired pastes (also as a security concern). To do
+this on a GNU/Linux machine edit the /etc/crontab file and add the following line:
+
+		@daily www-data php /path/to/pasthis/index.php
+
 ## Specifications:
   - Pasthis MUST supports color highlighting
   - Pasthis SHOULD be able to work without JS if necessary

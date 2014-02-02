@@ -5,7 +5,7 @@ Pasthis is a simple pastebin written in [php](https://www.php.net/)
 and using [sqlite](https://sqlite.org/) as database backend.
 
 ## Deployment
-1. Download [pasthis](https://github.com/jvoisin/pasthis)
+1. Download [Pasthis](https://github.com/jvoisin/pasthis)
 2. Put it in a directory on your web server
 3. Configure the web server:
   - Apache: edit the RewriteBase directive in the
@@ -37,11 +37,11 @@ display the help output form more informations:
 		./pasthis.pl --help
 		./pasthis --url http://www.example.net/pasthis/ --file paste.txt
 
-You can set a default url by editing the line *my $url = undef;*.
+You can set a default url by editing the line *my $url = undef;*
 
 ### Tabulations
 
-Tabulations are handled in the textarea allowing you to write directly into pasthis
+Tabulations are handled in the textarea allowing you to write directly into Pasthis
 without changing the textarea focus.
 
 ## Specifications:

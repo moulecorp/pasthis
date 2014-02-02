@@ -21,6 +21,10 @@ this on a GNU/Linux machine edit the /etc/crontab file and add the following lin
 
 		@daily www-data php /path/to/pasthis/index.php
 
+Be aware expired pastes are deleted when requested or when the cron method is called.
+Without the previous cron configuration, their deletetion can't be ensured. They just
+won't be displayed.
+
 ## Specifications:
   - Pasthis MUST supports color highlighting
   - Pasthis SHOULD be able to work without JS if necessary

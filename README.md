@@ -25,6 +25,25 @@ Be aware expired pastes are deleted when requested or when the cron method is ca
 Without the previous cron configuration, their deletetion can't be ensured. They just
 won't be displayed.
 
+## Tips
+### Command line tool
+
+A [command line tool](https://github.com/jvoisin/pasthis/blob/master/pasthis.pl) is
+available and allows to send pastes from the console standard input (STDIN) or from
+a file. In order to take advantage of this tool, download it, make it executable and
+display the help output form more informations:
+
+		chmod +x ./pasthis.pl
+		./pasthis.pl --help
+		./pasthis --url http://www.example.net/pasthis/ --file paste.txt
+
+You can set a default url by editing the line *my $url = undef;*.
+
+### Tabulations
+
+Tabulations are handled in the textarea allowing you to write directly into pasthis
+without changing the textarea focus.
+
 ## Specifications:
   - Pasthis MUST supports color highlighting
   - Pasthis SHOULD be able to work without JS if necessary

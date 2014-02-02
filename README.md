@@ -35,7 +35,7 @@ display the help output for more information:
 
 		chmod +x ./pasthis.pl
 		./pasthis.pl --help
-		./pasthis --url http://www.example.net/pasthis/ --file paste.txt
+		./pasthis.pl --url http://www.example.net/pasthis/ --file paste.txt
 
 You can set a default url by editing the line *my $url = undef;*
 

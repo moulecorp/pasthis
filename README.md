@@ -17,11 +17,20 @@ and using [sqlite](https://sqlite.org/) as database backend.
   - Pasthis MUST NOT depend on external services
 
 ## Implementation
-## Anti-spam
-1. If the hidden field is filled, the user is banned for ~72h.
-2. A simple almost-cubic throttle is used, to prevent burst-spam
+### Anti-spam
+Every time a paste is sent, a value (called degree) is associated to
+the poster's ip hash. It is used in the followind formula:
 
-## Display
+    T = time() + intval(pow(degree, 2.5))
+
+If the user posts another paste after T, the degree is reset to zero.
+If s·he tries before T, the degree is incremented, and the paste is denied.
+
+There is also an hidden field, that set the degree is set to 512 (Which corresponds
+to ~72h) if filled.
+
+
+### Display
 The user can access the raw version of a paste by appending
 @raw to its id.
 

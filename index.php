@@ -75,6 +75,10 @@ final class Pasthis {
         print '<body>';
         while (list (, $ct) = each ($this->contents))
             print $ct;
+        print '<div id="footer">';
+        print 'Powered by <a href="https://github.com/jvoisin/pasthis">pasthis</a> - ';
+        print '<a href="https://github.com/jvoisin/pasthis/blob/master/pasthis.pl">command line</a>';
+        print '</div>';
         print '</body>';
         print '</html>';
         exit ();

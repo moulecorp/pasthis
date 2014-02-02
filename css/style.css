@@ -44,6 +44,10 @@ a:hover {
     text-decoration: underline;
 }
 
+#footer {
+    font-size: 0.75em;
+}
+
 #ricard {
     display: none;
 }

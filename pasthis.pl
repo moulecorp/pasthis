@@ -79,15 +79,17 @@ my %expirations = (
 $mech->post (
 	$url,
 	[
-		'd' => defined ($expirations{$expire}) ? $expirations{$expire} : 86400,
-		'p' => defined ($file_content) ? $file_content : <STDIN>,
+		'd'      => defined ($expirations{$expire}) ? $expirations{$expire} : 86400,
+		'p'      => defined ($file_content) ? $file_content : <STDIN>,
+		'ricard' => '',
 	]
 );
 
 die ('Error while sending paste to pasthis at '.$url) unless $mech->success ();
 
-my $id = $mech->find_link (text_regex => qr/^[a-zA-Z0-9]{6}$/, n => 1)->text ();
-print "paste:\t".$url.'/'.$id."\n";
-print "raw:\t".$url.'/'.$id."\@raw\n";
+
+my $link = $mech->uri ();
+print "paste:\t".$link."\n";
+print "raw:\t".$link."\@raw\n";
 
 1;

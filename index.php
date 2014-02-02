@@ -250,6 +250,11 @@ final class Pasthis {
 
 $pastebin = new Pasthis ();
 
+if (php_sapi_name () == 'cli') {
+    $pastebin->cron ();
+    exit ();
+}
+
 if (isset ($_GET['p']))
     $pastebin->show_paste (str_replace ("@raw", "", $_GET['p']),
             strtolower (substr ($_GET['p'], -4)) == "@raw");

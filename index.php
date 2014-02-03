@@ -37,14 +37,14 @@ final class Pasthis {
                 die ("Unable to create database, check permissions");
         }
         $this->db->exec ('pragma auto_vacuum = 1');
-        $this->db->query (
+        $this->db->exec (
             "CREATE TABLE if not exists pastes (
                 id PRIMARY KEY,
                 deletion_date TIMESTAMP,
                 paste BLOB
             );"
         );
-        $this->db->query (
+        $this->db->exec (
             "CREATE TABLE if not exists users (
                 hash PRIMARY KEY,
                 nopaste_period TIMESTAMP,
@@ -187,7 +187,7 @@ final class Pasthis {
 
         $uniqid = $this->generate_id ();
 
-        $this->db->query ("INSERT INTO pastes (id, deletion_date, paste)
+        $this->db->exec ("INSERT INTO pastes (id, deletion_date, paste)
                 VALUES ('".$uniqid."','".$deletion_date."','".$paste."');");
 
         header ('location: ./'.$uniqid);

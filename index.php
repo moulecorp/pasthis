@@ -32,9 +32,9 @@ final class Pasthis {
                 SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
         if (is_null ($this->db)) {
             if (file_exists('pasthis.db'))
-                die ("Unable to open database, check permissions");
+                die ('Unable to open database, check permissions');
             else
-                die ("Unable to create database, check permissions");
+                die ('Unable to create database, check permissions');
         }
         $this->db->exec ('pragma auto_vacuum = 1');
         $this->db->exec (
@@ -114,22 +114,22 @@ final class Pasthis {
 
     function prompt_paste () {
         $this->add_content (
-            "<form method='post' action='.'>
-                <label for='d'>Expiration: </label>
-                <select name='d' id='d'>
-                    <option value='-2'>burn after reading</option>
-                    <option value='600'>10 minutes</option>
-                    <option value='3600'>1 hour</option>
-                    <option value='86400' selected='selected'>1 day</option>
-                    <option value='2678400'>1 month</option>
-                    <option value='31536000'>1 year</option>
-                    <option value='-1'>eternal</option>
+            '<form method="post" action=".">
+                <label for="d">Expiration: </label>
+                <select name="d" id="d">
+                    <option value="-2">burn after reading</option>
+                    <option value="600">10 minutes</option>
+                    <option value="3600">1 hour</option>
+                    <option value="86400" selected="selected">1 day</option>
+                    <option value="2678400">1 month</option>
+                    <option value="31536000">1 year</option>
+                    <option value="-1">eternal</option>
                 </select>
-                <input type='text' id='ricard' name='ricard'
-                        placeholder='Do not fill me!' />
-                <input type='submit' value='Send paste'>
-                <textarea autofocus required name='p'></textarea>
-            </form>"
+                <input type="text" id="ricard" name="ricard"
+                        placeholder="Do not fill me!" />
+                <input type="submit" value="Send paste">
+                <textarea autofocus required name="p"></textarea>
+            </form>'
         );
         $this->add_content ('<script src="./js/textarea.js"></script>');
 
@@ -141,7 +141,7 @@ final class Pasthis {
             $uniqid = substr (uniqid (), -6);
             $result = $this->db->querySingle (
                 "SELECT id FROM pastes
-                WHERE id='".$uniqid."';"
+                WHERE id='$uniqid';"
             );
         } while (!is_null ($result));
 
@@ -157,7 +157,7 @@ final class Pasthis {
 
         $result = $this->db->querySingle (
             "SELECT * FROM users
-             WHERE hash='".$hash."';",
+             WHERE hash='$hash';",
             true
         );
 
@@ -165,11 +165,12 @@ final class Pasthis {
         $obvious_spam = (!isset ($_POST['ricard']) or !empty ($_POST['ricard']));
 
         $degree = $in_period ? $result['degree']+1 : ($obvious_spam ? 512 : 1);
+        $nopaste_period = $this->nopaste_period ($degree);
 
         $this->db->exec (
             "INSERT OR REPLACE INTO users
              (hash, nopaste_period, degree)
-             VALUES ('".$hash."','".$this->nopaste_period ($degree)."','".$degree."');"
+             VALUES ('$hash', '$nopaste_period', '$degree');"
         );
 
         if ($in_period or $obvious_spam)
@@ -188,9 +189,9 @@ final class Pasthis {
         $uniqid = $this->generate_id ();
 
         $this->db->exec ("INSERT INTO pastes (id, deletion_date, paste)
-                VALUES ('".$uniqid."','".$deletion_date."','".$paste."');");
+                VALUES ('$uniqid', '$deletion_date', '$paste');");
 
-        header ('location: ./'.$uniqid);
+        header ('location: ./' . $uniqid);
     }
 
     function show_paste ($id, $raw) {
@@ -198,7 +199,7 @@ final class Pasthis {
         $raw = intval ($raw);
 
         $fail = false;
-        $request = $this->db->query ("SELECT * FROM pastes WHERE id='".$id."';");
+        $request = $this->db->query ("SELECT * FROM pastes WHERE id='$id';");
         if (!($request instanceof Sqlite3Result))
             die ('Unable to perform query on the database');
 
@@ -208,7 +209,7 @@ final class Pasthis {
             $fail = true;
         } elseif ($result['deletion_date'] < time ()
                 and $result['deletion_date'] >= 0) {
-            $this->db->exec ("DELETE FROM pastes WHERE id='".$id."';");
+            $this->db->exec ("DELETE FROM pastes WHERE id='$id';");
 
             /* do not fail on "burn after reading" pastes */
             if ($result['deletion_date'] != 0)
@@ -217,7 +218,7 @@ final class Pasthis {
             $this->db->exec (
                 "UPDATE pastes
                  SET deletion_date=0
-                 WHERE id='".$id."';"
+                 WHERE id='$id';"
             );
         }
 
@@ -233,7 +234,7 @@ final class Pasthis {
                     htmlspecialchars ($result['paste']).'</pre>');
             $this->add_content ($this->remaining_time ($result['deletion_date']));
         } else {
-            header ("Content-Type: text/plain");
+            header ('Content-Type: text/plain');
             print $result['paste'];
             exit ();
         }

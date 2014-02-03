@@ -36,12 +36,15 @@ pre {
 
 a {
     color: black;
-    font-size: 1.2em;
     text-decoration: none;
 }
 
 a:hover {
     text-decoration: underline;
+}
+
+#links a {
+    font-size: 1.2em;
 }
 
 #footer {

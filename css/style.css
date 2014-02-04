@@ -15,8 +15,8 @@ textarea {
     display: block;
     margin: auto;
     margin-top: 1em;
-    width: 75%;
     min-height: 75%;
+    min-width: 75%;
     border-radius: 8px;
     border: 1px solid gray;
     padding: 1em;

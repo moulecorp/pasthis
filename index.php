@@ -31,7 +31,7 @@ final class Pasthis {
         $this->db = new SQLite3 ('pasthis.db',
                 SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
         if (is_null ($this->db)) {
-            if (file_exists('pasthis.db'))
+            if (file_exists ('pasthis.db'))
                 die ('Unable to open database, check permissions');
             else
                 die ('Unable to create database, check permissions');

@@ -8,15 +8,15 @@ body {
 }
 
 form {
-    height: 100%;
+    height: calc(75% + 3.5em);
 }
 
 textarea {
     display: block;
     margin: auto;
     margin-top: 1em;
-    min-height: 75%;
     min-width: 75%;
+    min-height: calc(100% - 5em);
     border-radius: 8px;
     border: 1px solid gray;
     padding: 1em;
@@ -48,6 +48,8 @@ a:hover {
 }
 
 #footer {
+    margin-top: 3em;
+    margin-bottom: 1em;
     font-size: 0.75em;
 }
 

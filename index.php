@@ -97,8 +97,8 @@ final class Pasthis {
         $expiration = new DateTime ('@'.$timestamp);
         $interval = $expiration->diff (new DateTime (), true);
 
-        $ret = 'Expires in '.$format ($interval->m, 'month').$format ($interval->d, 'day');
-        if ($interval->m === 0) {
+        $ret = 'Expires in '.$format ($interval->days, 'day');
+        if ($interval->days !== 31) {
             $ret .= $format ($interval->h, 'hour');
             if ($interval->d === 0) {
                 $ret .= $format ($interval->i, 'minute');

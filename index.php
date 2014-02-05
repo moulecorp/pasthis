@@ -77,7 +77,7 @@ final class Pasthis {
             print $ct;
         print '<div id="footer">';
         print 'Powered by <a href="https://github.com/jvoisin/pasthis">pasthis</a> - ';
-        print '<a href="https://github.com/jvoisin/pasthis/blob/master/pasthis.pl">command line</a>';
+        print '<a href="./pasthis.pl">command line</a>';
         print '</div>';
         print '</body>';
         print '</html>';

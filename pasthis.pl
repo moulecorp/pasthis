@@ -52,7 +52,6 @@ EXPIRATION
 \t10m\t10 minutes.
 \t1h\t1 hour.
 \t1m\t1 month.
-\t1y\t1 year.
 \teternal\tNever expires.
 EOF
 	exit 0;
@@ -72,7 +71,6 @@ my %expirations = (
 	'1h'      => 3600,
 	'1d'      => 86400,
 	'1m'      => 2678400,
-	'1y'      => 31536000,
 	'eternal' => -1,
 );
 

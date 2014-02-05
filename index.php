@@ -97,16 +97,13 @@ final class Pasthis {
         $expiration = new DateTime ('@'.$timestamp);
         $interval = $expiration->diff (new DateTime (), true);
 
-        $ret = 'Expires in '.$format ($interval->y, 'year').$format ($interval->m, 'month');
-        if ($interval->y === 0) {
-            $ret .= $format ($interval->d, 'day');
-            if ($interval->m === 0) {
-                $ret .= $format ($interval->h, 'hour');
-                if ($interval->d === 0) {
-                    $ret .= $format ($interval->i, 'minute');
-                    if ($interval->h === 0)
-                        $ret .= $format ($interval->s, 'second');
-                }
+        $ret = 'Expires in '.$format ($interval->m, 'month').$format ($interval->d, 'day');
+        if ($interval->m === 0) {
+            $ret .= $format ($interval->h, 'hour');
+            if ($interval->d === 0) {
+                $ret .= $format ($interval->i, 'minute');
+                if ($interval->h === 0)
+                    $ret .= $format ($interval->s, 'second');
             }
         }
         return rtrim ($ret).'.';
@@ -122,7 +119,6 @@ final class Pasthis {
                     <option value="3600">1 hour</option>
                     <option value="86400" selected="selected">1 day</option>
                     <option value="2678400">1 month</option>
-                    <option value="31536000">1 year</option>
                     <option value="-1">eternal</option>
                 </select>
                 <input type="text" id="ricard" name="ricard"

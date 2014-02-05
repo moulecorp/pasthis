@@ -75,8 +75,9 @@ The user can access the raw version of a paste by appending
 @raw to its id.
 
 ## Authors and License
- - Copyright (C) 2014 Julien (jvoisin) Voisin - dustri.org
- - Copyright (C) 2014 Antoine Tenart <atenart@n0.pe>
+
+		Copyright (C) 2014 Julien (jvoisin) Voisin - dustri.org
+		Copyright (C) 2014 Antoine Tenart <atenart@n0.pe>
 
 		This program is free software; you can redistribute it and/or
 		modify it under the terms of the GNU General Public License

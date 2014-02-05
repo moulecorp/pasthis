@@ -98,7 +98,7 @@ final class Pasthis {
         $interval = $expiration->diff (new DateTime (), true);
 
         $ret = 'Expires in '.$format ($interval->days, 'day');
-        if ($interval->days !== 31) {
+        if ($interval->days < 31) {
             $ret .= $format ($interval->h, 'hour');
             if ($interval->d === 0) {
                 $ret .= $format ($interval->i, 'minute');
@@ -118,7 +118,7 @@ final class Pasthis {
                     <option value="600">10 minutes</option>
                     <option value="3600">1 hour</option>
                     <option value="86400" selected="selected">1 day</option>
-                    <option value="2678400">1 month</option>
+                    <option value="604800">1 week</option>
                     <option value="-1">eternal</option>
                 </select>
                 <input type="text" id="ricard" name="ricard"

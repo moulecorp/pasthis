@@ -30,6 +30,7 @@ textarea:focus {
 
 pre {
     width: 75%;
+    color: white;
     text-align: left;
     overflow-y: auto;
 }

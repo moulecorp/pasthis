@@ -226,7 +226,7 @@ final class Pasthis {
             $this->add_content ('<script src="./js/prettify.js"></script>', true);
             $this->add_content ('<div id="links"><a href="./'.$id.'@raw">Raw</a> - '.
                                 '<a href="./">New paste</a></div>');
-            $this->add_content ('<pre class="prettyprint">'.
+            $this->add_content ('<pre class="prettyprint linenums">'.
                     htmlspecialchars ($result['paste']).'</pre>');
             $this->add_content ($this->remaining_time ($result['deletion_date']));
         } else {

@@ -5,13 +5,13 @@ Pasthis is a simple pastebin written in [php](https://www.php.net/)
 and using [sqlite](https://sqlite.org/) as database backend.
 
 ## Deployment
-1. Download [Pasthis](https://github.com/jvoisin/pasthis)
+1. Download [Pasthis](https://github.com/moulecorp/pasthis)
 2. Put it in a directory on your web server
 3. Configure the web server:
   - Apache: edit the RewriteBase directive in the
-  [.htaccess](https://github.com/jvoisin/pasthis/blob/master/.htaccess) if needed
+  [.htaccess](https://github.com/moulecorp/pasthis/blob/master/.htaccess) if needed
   - Nginx: see the provided
-  [nginx.conf](https://github.com/jvoisin/pasthis/blob/master/nginx.conf)
+  [nginx.conf](https://github.com/moulecorp/pasthis/blob/master/nginx.conf)
 4. Make sure that the folder is _readable_ and _writable_ by www-data, since this is
 required by php to be able to create the sqlite database
 
@@ -28,7 +28,7 @@ won't be displayed.
 ## Tips
 ### Command line tool
 
-A [command line tool](https://github.com/jvoisin/pasthis/blob/master/pasthis.pl) is
+A [command line tool](https://github.com/moulecorp/pasthis/blob/master/pasthis.pl) is
 available allowing you to send pastes from the console standard input (STDIN) or from
 a file. In order to take advantage of this tool, download it, make it executable and
 display the help output for more information:

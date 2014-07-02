@@ -41,6 +41,7 @@ final class Pasthis {
             "CREATE TABLE if not exists pastes (
                 id PRIMARY KEY,
                 deletion_date TIMESTAMP,
+                highlighting INTEGER,
                 paste BLOB
             );"
         );
@@ -124,6 +125,9 @@ final class Pasthis {
                 <input type="text" id="ricard" name="ricard"
                         placeholder="Do not fill me!" />
                 <input type="submit" value="Send paste">
+                <br />
+                <input type="checkbox" name="highlighting" checked>
+                <label for="highlighting">syntax highlighting</label>
                 <textarea autofocus required name="p"></textarea>
             </form>'
         );
@@ -173,7 +177,7 @@ final class Pasthis {
             die ('Spam');
     }
 
-    function add_paste ($deletion_date, $paste) {
+    function add_paste ($deletion_date, $highlighting, $paste) {
         $this->check_spammer();
 
         $paste = SQLite3::escapeString ($paste);
@@ -184,8 +188,8 @@ final class Pasthis {
 
         $uniqid = $this->generate_id ();
 
-        $this->db->exec ("INSERT INTO pastes (id, deletion_date, paste)
-                VALUES ('$uniqid', '$deletion_date', '$paste');");
+        $this->db->exec ("INSERT INTO pastes (id, deletion_date, highlighting, paste)
+                VALUES ('$uniqid', '$deletion_date', '$highlighting', '$paste');");
 
         header ('location: ./' . $uniqid);
     }
@@ -222,8 +226,10 @@ final class Pasthis {
             $this->add_content ("<p>Meh, no paste for this id :(</p>");
             $this->prompt_paste ();
         } elseif (!$raw) {
-            $this->add_content ('<script>window.onload=function(){prettyPrint();}</script>');
-            $this->add_content ('<script src="./js/prettify.js"></script>', true);
+            if ($result['highlighting']) {
+                $this->add_content ('<script>window.onload=function(){prettyPrint();}</script>');
+                $this->add_content ('<script src="./js/prettify.js"></script>', true);
+            }
             $this->add_content ('<div id="links"><a href="./'.$id.'@raw">Raw</a> - '.
                                 '<a href="./">New paste</a></div>');
             $this->add_content ('<pre class="prettyprint linenums">'.
@@ -260,7 +266,7 @@ if (isset ($_GET['p']))
     $pastebin->show_paste (str_replace ("@raw", "", $_GET['p']),
             strtolower (substr ($_GET['p'], -4)) == "@raw");
 elseif (isset ($_POST['d']) && isset ($_POST['p']))
-    $pastebin->add_paste ($_POST['d'], $_POST['p']);
+    $pastebin->add_paste ($_POST['d'], isset($_POST['highlighting']), $_POST['p']);
 else
     $pastebin->prompt_paste ();
 ?>

@@ -27,6 +27,7 @@ my $mech   = WWW::Mechanize->new ();
 my $url    = undef;
 my $expire = '1h';
 my $file   = undef;
+my $nohl   = undef;
 my $help   = undef;
 
 die ('Command line arguments error') unless
@@ -34,6 +35,7 @@ GetOptions (
 	'url=s'    => \$url,
 	'expire=s' => \$expire,
 	'file=s'   => \$file,
+	'nohl'     => \$nohl,
 	'help'     => \$help,
 );
 
@@ -45,6 +47,7 @@ Usage:\t$0 [OPTIONS] STDIN
 OPTIONS
 \t--url URL\t\tSend paste to pasthis located at URL.
 \t--expire EXPIRATION\tDelete paste after EXPIRATION. Defaults to 1d.
+\t--nohl\t\t\tDisable syntax highlighting.
 \t--help\t\t\tPrint this help.
 
 EXPIRATION
@@ -80,6 +83,7 @@ $mech->post (
 		'd'      => defined ($expirations{$expire}) ? $expirations{$expire} : 86400,
 		'p'      => defined ($file_content) ? $file_content : <STDIN>,
 		'ricard' => '',
+		defined ($nohl) ? () : ('highlighting' => 1),
 	]
 );
 

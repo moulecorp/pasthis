@@ -66,8 +66,6 @@ final class Pasthis {
     }
 
     private function render () {
-		header ('X-Content-Type-Options=nosniff');
-		header('Content-Type: text/html; charset=utf-8');
         print '<!DOCTYPE html>';
         print '<html>';
         print '<head>';
@@ -88,7 +86,7 @@ final class Pasthis {
     }
 
     private function remaining_time ($timestamp) {
-	if ($timestamp === -1)
+        if ($timestamp === -1)
             return 'Never expires.';
         elseif ($timestamp === 0)
             return 'Expired.';
@@ -225,24 +223,29 @@ final class Pasthis {
         }
 
         if ($fail) {
-            $this->add_content ("<p>Meh, no paste for this id :(</p>");
+            $this->add_content ('<p>Meh, no paste for this id :(</p>');
             $this->prompt_paste ();
-        } elseif (!$raw) {
-            if ($result['highlighting']) {
-                $this->add_content ('<script>window.onload=function(){prettyPrint();}</script>');
-                $this->add_content ('<script src="./js/prettify.js"></script>', true);
-            }
-            $this->add_content ('<div id="links"><a href="./'.$id.'@raw">Raw</a> - '.
-                                '<a href="./">New paste</a></div>');
-            $this->add_content ('<pre class="prettyprint linenums">'.
-                    htmlentities ($result['paste']).'</pre>');
-            $this->add_content ($this->remaining_time ($result['deletion_date']));
         } else {
-			header('Content-Type: text/html; charset=utf-8');
-			header ('X-Content-Type-Options=nosniff');
-            header ('Content-Type: text/plain');
-            print $result['paste'];
-            exit ();
+            header ('X-Content-Type-Options=nosniff');
+
+            if (!$raw) {
+                header ('Content-Type: text/html; charset=utf-8');
+
+                if ($result['highlighting']) {
+                    $this->add_content ('<script>window.onload=function(){prettyPrint();}</script>');
+                    $this->add_content ('<script src="./js/prettify.js"></script>', true);
+                }
+                $this->add_content ('<div id="links"><a href="./'.$id.'@raw">Raw</a> - '.
+                                    '<a href="./">New paste</a></div>');
+                $this->add_content ('<pre class="prettyprint linenums">'.
+                                    htmlentities ($result['paste']).'</pre>');
+                $this->add_content ($this->remaining_time ($result['deletion_date']));
+            } else {
+                header ('Content-Type: text/plain; charset=utf-8');
+
+                print $result['paste'];
+                exit ();
+            }
         }
 
         $this->render ();

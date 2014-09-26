@@ -86,11 +86,11 @@ final class Pasthis {
     }
 
     private function remaining_time ($timestamp) {
-        if ($timestamp === -1)
+        if ($timestamp == -1)
             return 'Never expires.';
-        elseif ($timestamp === 0)
+        elseif ($timestamp == 0)
             return 'Expired.';
-        elseif ($timestamp === -2)
+        elseif ($timestamp == -2)
             return 'One reading remaining.';
 
         $format = function ($t,$s) { return $t ? $t.' '.$s.($t>1 ? 's' : '' ).' ' : ''; };

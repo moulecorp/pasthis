@@ -201,13 +201,9 @@ final class Pasthis {
         $raw = intval ($raw);
 
         $fail = false;
-        $request = $this->db->query ("SELECT * FROM pastes WHERE id='$id';");
-        if (!($request instanceof Sqlite3Result))
-            die ('Unable to perform query on the database');
+        $result = $this->db->querySingle ("SELECT * FROM pastes WHERE id='$id';", true);
 
-        $result = $request->fetchArray ();
-
-        if ($result === false) {
+        if ($result == null) {
             $fail = true;
         } elseif ($result['deletion_date'] < time ()
                 and $result['deletion_date'] >= 0) {

@@ -241,7 +241,7 @@ final class Pasthis {
             $this->add_content ('<p>Meh, no paste for this id :(</p>');
             $this->prompt_paste ();
         } else {
-            header ('X-Content-Type-Options=nosniff');
+            header ('X-Content-Type-Options: nosniff');
 
             if (!$raw) {
                 header ('Content-Type: text/html; charset=utf-8');

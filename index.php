@@ -153,9 +153,7 @@ final class Pasthis {
     }
 
     private function check_spammer () {
-        $hash = sha1 (isset ($_SERVER['HTTP_X_FORWARDED_FOR']) ?
-                      $_SERVER['HTTP_X_FORWARDED_FOR']         :
-                      $_SERVER['REMOTE_ADDR']);
+        $hash = sha1 ($_SERVER['REMOTE_ADDR']);
 
         $result = $this->db->querySingle (
             "SELECT * FROM users

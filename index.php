@@ -28,13 +28,11 @@ final class Pasthis {
 
     function __construct ($title = 'Pasthis') {
         $this->title = $title;
-        $this->db = new SQLite3 ('pasthis.db',
-                SQLITE3_OPEN_READWRITE | SQLITE3_OPEN_CREATE);
-        if (is_null ($this->db)) {
-            if (file_exists ('pasthis.db'))
-                die ('Unable to open database, check permissions');
-            else
-                die ('Unable to create database, check permissions');
+        try {
+            $this->db = new PDO ('sqlite:pasthis.db');
+            $this->db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        } catch (PDOException $e) {
+            die ('Unable to open database: ' . $e->getMessage ());
         }
         $this->db->exec ('pragma auto_vacuum = 1');
         $this->db->exec (
@@ -55,7 +53,7 @@ final class Pasthis {
     }
 
     function __destruct () {
-        $this->db->close ();
+        $this->db = null;
     }
 
     private function add_content ($content, $prepend = false) {
@@ -137,13 +135,16 @@ final class Pasthis {
     }
 
     private function generate_id () {
+        $query = $this->db->prepare (
+            "SELECT id FROM pastes
+             WHERE id = :uniqid;"
+        );
+        $query->bindParam (':uniqid', $uniqid);
+
         do {
             $uniqid = substr (uniqid (), -6);
-            $result = $this->db->querySingle (
-                "SELECT id FROM pastes
-                WHERE id='$uniqid';"
-            );
-        } while (!is_null ($result));
+            $query->execute ();
+        } while ($query->fetch () != false);
 
         return $uniqid;
     }
@@ -155,11 +156,13 @@ final class Pasthis {
     private function check_spammer () {
         $hash = sha1 ($_SERVER['REMOTE_ADDR']);
 
-        $result = $this->db->querySingle (
+        $query = $this->db->prepare (
             "SELECT * FROM users
-             WHERE hash='$hash';",
-            true
+             WHERE hash = :hash"
         );
+        $query->bindValue (':hash', $hash);
+        $query->execute ();
+        $result = $query->fetch ();
 
         $in_period = (!empty ($result) and time () < $result['nopaste_period']);
         $obvious_spam = (!isset ($_POST['ricard']) or !empty ($_POST['ricard']));
@@ -167,11 +170,15 @@ final class Pasthis {
         $degree = $in_period ? $result['degree']+1 : ($obvious_spam ? 512 : 1);
         $nopaste_period = $this->nopaste_period ($degree);
 
-        $this->db->exec (
+        $query = $this->db->prepare (
             "INSERT OR REPLACE INTO users
              (hash, nopaste_period, degree)
-             VALUES ('$hash', '$nopaste_period', '$degree');"
+             VALUES (:hash, :nopaste_period, :degree);"
         );
+        $query->bindValue (':hash', $hash);
+        $query->bindValue (':nopaste_period', $nopaste_period);
+        $query->bindValue (':degree', $degree);
+        $query->execute ();
 
         if ($in_period or $obvious_spam)
             die ('Spam');
@@ -180,7 +187,6 @@ final class Pasthis {
     function add_paste ($deletion_date, $highlighting, $paste) {
         $this->check_spammer();
 
-        $paste = SQLite3::escapeString ($paste);
         $deletion_date = intval ($deletion_date);
 
         if ($deletion_date > 0)
@@ -188,8 +194,15 @@ final class Pasthis {
 
         $uniqid = $this->generate_id ();
 
-        $this->db->exec ("INSERT INTO pastes (id, deletion_date, highlighting, paste)
-                VALUES ('$uniqid', '$deletion_date', '$highlighting', '$paste');");
+        $query = $this->db->prepare (
+            "INSERT INTO pastes (id, deletion_date, highlighting, paste)
+             VALUES (:uniqid, :deletion_date, :highlighting, :paste);"
+        );
+        $query->bindValue (':uniqid', $uniqid);
+        $query->bindValue (':deletion_date', $deletion_date);
+        $query->bindValue (':highlighting', $highlighting);
+        $query->bindValue (':paste', $paste);
+        $query->execute ();
 
         header ('location: ./' . $uniqid);
     }
@@ -199,7 +212,13 @@ final class Pasthis {
         $raw = intval ($raw);
 
         $fail = false;
-        $result = $this->db->querySingle ("SELECT * FROM pastes WHERE id='$id';", true);
+        $query = $this->db->prepare(
+            "SELECT * FROM pastes
+             WHERE id = :id;"
+        );
+        $query->bindValue (':id', $id);
+        $query->execute ();
+        $result = $query->fetch ();
 
         if ($result == null) {
             $fail = true;

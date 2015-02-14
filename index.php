@@ -224,17 +224,24 @@ final class Pasthis {
             $fail = true;
         } elseif ($result['deletion_date'] < time ()
                 and $result['deletion_date'] >= 0) {
-            $this->db->exec ("DELETE FROM pastes WHERE id='$id';");
+            $query = $this->db->prepare (
+                "DELETE FROM pastes
+                 WHERE id = :id;"
+            );
+            $query->bindValue (':id', $id);
+            $query->execute ();
 
             /* do not fail on "burn after reading" pastes */
             if ($result['deletion_date'] != 0)
                 $fail = true;
         } elseif ($result['deletion_date'] == -2) {
-            $this->db->exec (
+            $query = $this->db->prepare (
                 "UPDATE pastes
                  SET deletion_date=0
-                 WHERE id='$id';"
+                 WHERE id = :id;"
             );
+            $query->bindValue (':id', $id);
+            $query->execute ();
         }
 
         if ($fail) {

@@ -209,8 +209,9 @@ final class Pasthis {
         header ('location: ./' . $uniqid);
     }
 
-    function show_paste ($id, $raw) {
-        $raw = intval ($raw);
+    function show_paste ($param) {
+        $id = str_replace ("@raw", "", $param);
+        $is_raw = intval(strtolower (substr ($param, -4)) == "@raw");
 
         $fail = false;
         $query = $this->db->prepare(
@@ -251,7 +252,12 @@ final class Pasthis {
         } else {
             header ('X-Content-Type-Options: nosniff');
 
-            if (!$raw) {
+	    if ($is_raw) {
+                header ('Content-Type: text/plain; charset=utf-8');
+
+                print $result['paste'];
+                exit ();
+	    } else {
                 header ('Content-Type: text/html; charset=utf-8');
 
                 if ($result['highlighting']) {
@@ -263,11 +269,6 @@ final class Pasthis {
                 $this->add_content ('<pre class="prettyprint linenums">'.
                                     htmlentities ($result['paste']).'</pre>');
                 $this->add_content ($this->remaining_time ($result['deletion_date']));
-            } else {
-                header ('Content-Type: text/plain; charset=utf-8');
-
-                print $result['paste'];
-                exit ();
             }
         }
 
@@ -293,8 +294,7 @@ if (php_sapi_name () == 'cli') {
 }
 
 if (isset ($_GET['p']))
-    $pastebin->show_paste (str_replace ("@raw", "", $_GET['p']),
-            strtolower (substr ($_GET['p'], -4)) == "@raw");
+    $pastebin->show_paste ($_GET['p']);
 elseif (isset ($_POST['d']) && isset ($_POST['p']))
     $pastebin->add_paste ($_POST['d'], isset($_POST['highlighting']), $_POST['p']);
 else

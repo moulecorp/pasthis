@@ -252,12 +252,12 @@ final class Pasthis {
         } else {
             header ('X-Content-Type-Options: nosniff');
 
-	    if ($is_raw) {
+            if ($is_raw) {
                 header ('Content-Type: text/plain; charset=utf-8');
 
                 print $result['paste'];
                 exit ();
-	    } else {
+            } else {
                 header ('Content-Type: text/html; charset=utf-8');
 
                 if ($result['highlighting']) {

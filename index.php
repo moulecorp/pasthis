@@ -209,7 +209,6 @@ final class Pasthis {
     }
 
     function show_paste ($id, $raw) {
-        $id = SQLite3::escapeString ($id);
         $raw = intval ($raw);
 
         $fail = false;

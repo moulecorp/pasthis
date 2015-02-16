@@ -32,6 +32,7 @@ final class Pasthis {
         try {
             $this->db = new PDO ($dsn);
             $this->db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+            $this->db->setAttribute (PDO::ATTR_EMULATE_PREPARES, false);
         } catch (PDOException $e) {
             die ('Unable to open database: ' . $e->getMessage ());
         }

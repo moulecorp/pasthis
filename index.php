@@ -173,7 +173,7 @@ final class Pasthis {
         $nopaste_period = $this->nopaste_period ($degree);
 
         $query = $this->db->prepare (
-            "INSERT OR REPLACE INTO users
+            "REPLACE INTO users
              (hash, nopaste_period, degree)
              VALUES (:hash, :nopaste_period, :degree);"
         );

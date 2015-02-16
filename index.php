@@ -28,8 +28,9 @@ final class Pasthis {
 
     function __construct ($title = 'Pasthis') {
         $this->title = $title;
+        $dsn = 'sqlite:' . dirname(__FILE__) .'/pasthis.db';
         try {
-            $this->db = new PDO ('sqlite:pasthis.db');
+            $this->db = new PDO ($dsn);
             $this->db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
         } catch (PDOException $e) {
             die ('Unable to open database: ' . $e->getMessage ());

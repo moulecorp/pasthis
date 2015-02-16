@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-#  Copyright (C) 2014 Antoine Tenart <atenart@n0.pe>
+#  Copyright (C) 2014 - 2015 Antoine Tenart <atenart@n0.pe>
 # 
 #  This program is free software; you can redistribute it and/or
 #  modify it under the terms of the GNU General Public License

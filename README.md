@@ -25,10 +25,6 @@ Be aware expired pastes are deleted when requested or when the cron method is ca
 Without the previous cron configuration, their deletetion can't be ensured. They just
 won't be displayed.
 
-## Update
-1. Update to the latest version (keep the database!)
-2. Run update.php
-
 ## Tips
 ### Command line tool
 

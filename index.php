@@ -140,7 +140,7 @@ final class Pasthis {
             "SELECT id FROM pastes
              WHERE id = :uniqid;"
         );
-        $query->bindParam (':uniqid', $uniqid);
+        $query->bindParam (':uniqid', $uniqid, PDO::PARAM_STR, 6);
 
         do {
             $uniqid = substr (uniqid (), -6);
@@ -161,7 +161,7 @@ final class Pasthis {
             "SELECT * FROM users
              WHERE hash = :hash"
         );
-        $query->bindValue (':hash', $hash);
+        $query->bindValue (':hash', $hash, PDO::PARAM_STR);
         $query->execute ();
         $result = $query->fetch ();
 
@@ -176,9 +176,9 @@ final class Pasthis {
              (hash, nopaste_period, degree)
              VALUES (:hash, :nopaste_period, :degree);"
         );
-        $query->bindValue (':hash', $hash);
-        $query->bindValue (':nopaste_period', $nopaste_period);
-        $query->bindValue (':degree', $degree);
+        $query->bindValue (':hash', $hash, PDO::PARAM_STR);
+        $query->bindValue (':nopaste_period', $nopaste_period, PDO::PARAM_INT);
+        $query->bindValue (':degree', $degree, PDO::PARAM_INT);
         $query->execute ();
 
         if ($in_period or $obvious_spam)
@@ -199,10 +199,10 @@ final class Pasthis {
             "INSERT INTO pastes (id, deletion_date, highlighting, paste)
              VALUES (:uniqid, :deletion_date, :highlighting, :paste);"
         );
-        $query->bindValue (':uniqid', $uniqid);
-        $query->bindValue (':deletion_date', $deletion_date);
-        $query->bindValue (':highlighting', $highlighting);
-        $query->bindValue (':paste', $paste);
+        $query->bindValue (':uniqid', $uniqid, PDO::PARAM_STR);
+        $query->bindValue (':deletion_date', $deletion_date, PDO::PARAM_INT);
+        $query->bindValue (':highlighting', $highlighting, PDO::PARAM_BOOL);
+        $query->bindValue (':paste', $paste, PDO::PARAM_STR);
         $query->execute ();
 
         header ('location: ./' . $uniqid);
@@ -217,7 +217,7 @@ final class Pasthis {
             "SELECT * FROM pastes
              WHERE id = :id;"
         );
-        $query->bindValue (':id', $id);
+        $query->bindValue (':id', $id, PDO::PARAM_STR);
         $query->execute ();
         $result = $query->fetch ();
 
@@ -229,7 +229,7 @@ final class Pasthis {
                 "DELETE FROM pastes
                  WHERE id = :id;"
             );
-            $query->bindValue (':id', $id);
+            $query->bindValue (':id', $id, PDO::PARAM_STR);
             $query->execute ();
 
             /* do not fail on "burn after reading" pastes */
@@ -241,7 +241,7 @@ final class Pasthis {
                  SET deletion_date=0
                  WHERE id = :id;"
             );
-            $query->bindValue (':id', $id);
+            $query->bindValue (':id', $id, PDO::PARAM_STR);
             $query->execute ();
         }
 

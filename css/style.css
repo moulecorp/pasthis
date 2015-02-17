@@ -19,7 +19,6 @@ textarea {
     min-width: 70%;
     min-height: calc(100% - 5em);
     resize: vertical;
-    border-radius: 8px;
     border: 1px solid gray;
     padding: 1em;
     outline: none;

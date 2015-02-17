@@ -25,7 +25,7 @@ local $/;
 
 my $mech   = WWW::Mechanize->new ();
 my $url    = undef;
-my $expire = '1h';
+my $expire = '1d';
 my $file   = undef;
 my $hl     = undef;
 my $help   = undef;

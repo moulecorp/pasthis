@@ -58,6 +58,7 @@ pre {
     min-height: calc(75% - 5em) !important;
     color: white;
     text-align: left;
+    overflow-y: auto;
     border-radius: 0 !important;
 }
 

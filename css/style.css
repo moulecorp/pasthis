@@ -56,7 +56,7 @@ pre {
     padding: 1em !important;
     width: calc(100% - 2em) !important;
     min-height: calc(75% - 5em) !important;
-    color: white;
+    color: black;
     text-align: left;
     overflow-y: auto;
     border-radius: 0 !important;

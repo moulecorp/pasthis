@@ -15,14 +15,14 @@ and using [sqlite](https://sqlite.org/) as database backend.
 4. Make sure that the folder is _readable_ and _writable_ by www-data, since this is
 required by php to be able to create the sqlite database
 
-It is recommanded to call the cron method on a regular basis to avoid an unwanted
+It is recommended to call the cron method on a regular basis to avoid an unwanted
 growing database and to delete expired pastes (also as a security concern). To do
 this on a GNU/Linux machine edit the /etc/crontab file and add the following line:
 
 		@daily www-data php /path/to/pasthis/index.php
 
 Be aware expired pastes are deleted when requested or when the cron method is called.
-Without the previous cron configuration, their deletetion can't be ensured. They just
+Without the previous cron configuration, their deletion can't be ensured. They just
 won't be displayed.
 
 ## Tips
@@ -59,14 +59,14 @@ without changing the textarea focus.
 ## Implementation
 ### Anti-spam
 Every time a paste is sent, a value (called degree) is associated to
-the poster's ip hash. It is used in the followind formula:
+the poster's ip hash. It is used in the following formula:
 
     T = time() + intval(pow(degree, 2.5))
 
 If the user posts another paste after T, the degree is reset to zero.
-If s·he tries before T, the degree is incremented, and the paste is denied.
+If he tries before T, the degree is incremented, and the paste is denied.
 
-There is also an hidden field, that set the degree is set to 512 (Which corresponds
+There is also an hidden field, that set the degree to 512 (Which corresponds
 to ~72h) if filled.
 
 

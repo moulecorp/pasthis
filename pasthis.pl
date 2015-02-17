@@ -54,6 +54,7 @@ EXPIRATION
 \tburn\tBurn after a single read.
 \t10m\t10 minutes.
 \t1h\t1 hour.
+\t1d\t1 day.
 \t1w\t1 week.
 \teternal\tNever expires.
 EOF

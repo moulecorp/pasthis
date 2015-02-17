@@ -202,7 +202,7 @@ final class Pasthis {
         );
         $query->bindValue (':uniqid', $uniqid, PDO::PARAM_STR);
         $query->bindValue (':deletion_date', $deletion_date, PDO::PARAM_INT);
-        $query->bindValue (':highlighting', $highlighting, PDO::PARAM_BOOL);
+        $query->bindValue (':highlighting', $highlighting, PDO::PARAM_INT);
         $query->bindValue (':paste', $paste, PDO::PARAM_STR);
         $query->execute ();
 

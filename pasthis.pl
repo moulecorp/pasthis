@@ -35,7 +35,7 @@ GetOptions (
 	'url=s'    => \$url,
 	'expire=s' => \$expire,
 	'file=s'   => \$file,
-	'hl'     => \$hl,
+	'hl'       => \$hl,
 	'help'     => \$help,
 );
 

@@ -18,15 +18,19 @@ a:hover {
     text-decoration: underline;
 }
 
-#links a {
-    font-size: 1.2em;
+div#links {
+    display: block;
+    text-align: left;
+    font-size: 0.9em;
 }
 
 form {
     text-align: left;
     height: 75%;
+    font-size: 0.9em;
 }
-form #hl {
+
+#left {
     display: block;
     float: right;
 }
@@ -48,10 +52,13 @@ textarea:focus {
 }
 
 pre {
-    width: 100% !important;
+    margin: 1.5em 0 0 0 !important;
+    padding: 1em !important;
+    width: calc(100% - 2em) !important;
     min-height: calc(75% - 5em) !important;
     color: white;
     text-align: left;
+    border-radius: 0 !important;
 }
 
 #footer {

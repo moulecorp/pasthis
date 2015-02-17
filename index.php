@@ -125,7 +125,7 @@ final class Pasthis {
                 <input type="text" id="ricard" name="ricard"
                         placeholder="Do not fill me!" />
                 <input type="submit" value="Send paste">
-                <span id="hl">
+                <span id="left">
                 <input type="checkbox" id="highlighting" name="highlighting">
                 <label for="highlighting">syntax highlighting</label>
                 </span>
@@ -265,11 +265,14 @@ final class Pasthis {
                     $this->add_content ('<script>window.onload=function(){prettyPrint();}</script>');
                     $this->add_content ('<script src="./js/prettify.js"></script>', true);
                 }
-                $this->add_content ('<div id="links"><a href="./'.$id.'@raw">Raw</a> - '.
-                                    '<a href="./">New paste</a></div>');
+                $this->add_content (
+                    '<div id="links">
+                         <a href="./'.$id.'@raw">Raw</a> - <a href="./">New paste</a>
+                         <span id="left">'.$this->remaining_time ($result['deletion_date']).'</span>
+                     </div>'
+                );
                 $this->add_content ('<pre class="prettyprint linenums">'.
                                     htmlentities ($result['paste']).'</pre>');
-                $this->add_content ($this->remaining_time ($result['deletion_date']));
             }
         }
 

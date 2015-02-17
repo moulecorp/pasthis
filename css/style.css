@@ -1,46 +1,19 @@
-html, body {
-    height: 80%;
+html {
+    height: 60%;
+    margin: 0;
 }
-
 body {
+    width: 50%;
+    height: 100%;
+    margin: auto;
     padding: 5%;
     text-align: center;
-}
-
-form {
-    height: calc(75% + 3.5em);
-}
-
-textarea {
-    display: block;
-    position: relative;
-    margin: auto;
-    margin-top: 1em;
-    min-width: 70%;
-    min-height: calc(100% - 5em);
-    resize: vertical;
-    border: 1px solid gray;
-    padding: 1em;
-    outline: none;
-    font-family: monospace;
-}
-
-textarea:focus {
-    border: 0;
-    box-shadow: 0 0 1px 1px grey;
-}
-
-pre {
-    color: white;
-    text-align: left;
-    overflow-y: auto;
 }
 
 a {
     color: black;
     text-decoration: none;
 }
-
 a:hover {
     text-decoration: underline;
 }
@@ -49,8 +22,40 @@ a:hover {
     font-size: 1.2em;
 }
 
+form {
+    text-align: left;
+    height: 75%;
+}
+form #hl {
+    display: block;
+    float: right;
+}
+
+textarea {
+    position: relative;
+    margin-top: 1em;
+    min-height: calc(100% - 5em);
+    width: calc(100% - 2em);
+    resize: vertical;
+    border: 1px solid gray;
+    padding: 1em;
+    outline: none;
+    font-family: monospace;
+}
+textarea:focus {
+    border: 0;
+    box-shadow: 0 0 1px 1px gray;
+}
+
+pre {
+    width: 100% !important;
+    min-height: calc(75% - 5em) !important;
+    color: white;
+    text-align: left;
+}
+
 #footer {
-    margin-top: 3em;
+    margin-top: 2em;
     margin-bottom: 1em;
     font-size: 0.75em;
 }

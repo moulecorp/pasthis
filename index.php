@@ -125,9 +125,10 @@ final class Pasthis {
                 <input type="text" id="ricard" name="ricard"
                         placeholder="Do not fill me!" />
                 <input type="submit" value="Send paste">
-                <br />
+                <span id="hl">
                 <input type="checkbox" id="highlighting" name="highlighting">
                 <label for="highlighting">syntax highlighting</label>
+                </span>
                 <textarea autofocus required name="p"></textarea>
             </form>'
         );

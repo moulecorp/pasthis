@@ -2,7 +2,9 @@
 
 ## Stupid Simple Pastebin
 Pasthis is a simple pastebin written in [php](https://www.php.net/)
-and using [sqlite](https://sqlite.org/) as database backend.
+using [sqlite](https://sqlite.org/) as database backend and
+[prettify](https://code.google.com/p/google-code-prettify/) to handle the syntax
+highlighting.
 
 ## Deployment
 1. Download [Pasthis](https://github.com/moulecorp/pasthis)

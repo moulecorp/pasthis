@@ -64,6 +64,10 @@ pre {
     line-height: 1.5 !important;
 }
 
+.wrap {
+    white-space: pre-wrap;
+}
+
 #footer {
     margin-top: 2em;
     margin-bottom: 1em;

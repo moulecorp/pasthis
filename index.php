@@ -42,6 +42,7 @@ final class Pasthis {
                 id PRIMARY KEY,
                 deletion_date TIMESTAMP,
                 highlighting INTEGER,
+                wrap INTEGER,
                 paste BLOB
             );"
         );
@@ -126,6 +127,8 @@ final class Pasthis {
                         placeholder="Do not fill me!" />
                 <input type="submit" value="Send paste">
                 <span id="left">
+                <input type="checkbox" id="wrap" name="wrap">
+                <label for="wrap">wrap long lines</label>
                 <input type="checkbox" id="highlighting" name="highlighting">
                 <label for="highlighting">syntax highlighting</label>
                 </span>
@@ -187,7 +190,7 @@ final class Pasthis {
             die ('Spam');
     }
 
-    function add_paste ($deletion_date, $highlighting, $paste) {
+    function add_paste ($deletion_date, $highlighting, $wrap, $paste) {
         $this->check_spammer();
 
         $deletion_date = intval ($deletion_date);
@@ -198,12 +201,13 @@ final class Pasthis {
         $uniqid = $this->generate_id ();
 
         $query = $this->db->prepare (
-            "INSERT INTO pastes (id, deletion_date, highlighting, paste)
-             VALUES (:uniqid, :deletion_date, :highlighting, :paste);"
+            "INSERT INTO pastes (id, deletion_date, highlighting, wrap, paste)
+             VALUES (:uniqid, :deletion_date, :highlighting, :wrap, :paste);"
         );
         $query->bindValue (':uniqid', $uniqid, PDO::PARAM_STR);
         $query->bindValue (':deletion_date', $deletion_date, PDO::PARAM_INT);
         $query->bindValue (':highlighting', $highlighting, PDO::PARAM_INT);
+        $query->bindValue (':wrap', $wrap, PDO::PARAM_INT);
         $query->bindValue (':paste', $paste, PDO::PARAM_STR);
         $query->execute ();
 
@@ -271,8 +275,11 @@ final class Pasthis {
                          <span id="left">'.$this->remaining_time ($result['deletion_date']).'</span>
                      </div>'
                 );
-                $this->add_content ('<pre class="prettyprint linenums">'.
-                                    htmlentities ($result['paste']).'</pre>');
+                $class = 'prettyprint linenums';
+                if ($result['wrap'])
+                    $class .= ' wrap';
+
+                $this->add_content ('<pre class="'.$class.'">'.htmlentities ($result['paste']).'</pre>');
             }
         }
 
@@ -300,7 +307,8 @@ if (php_sapi_name () == 'cli') {
 if (isset ($_GET['p']))
     $pastebin->show_paste ($_GET['p']);
 elseif (isset ($_POST['d']) && isset ($_POST['p']))
-    $pastebin->add_paste ($_POST['d'], isset($_POST['highlighting']), $_POST['p']);
+    $pastebin->add_paste ($_POST['d'], isset ($_POST['highlighting']),
+                          isset ($_POST['wrap']), $_POST['p']);
 else
     $pastebin->prompt_paste ();
 ?>

@@ -45,6 +45,7 @@ textarea {
     padding: 1em;
     outline: none;
     font-family: monospace;
+    line-height: 1.5;
 }
 textarea:focus {
     border: 0;
@@ -60,6 +61,7 @@ pre {
     text-align: left;
     overflow-y: auto;
     border-radius: 0 !important;
+    line-height: 1.5 !important;
 }
 
 #footer {

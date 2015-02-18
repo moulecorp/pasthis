@@ -7,33 +7,35 @@ using [sqlite](https://sqlite.org/) as database backend and
 highlighting.
 
 ## Deployment
-1. Download [Pasthis](https://github.com/moulecorp/pasthis)
-2. Put it in a directory on your web server
+1. Download [Pasthis](https://github.com/moulecorp/pasthis).
+2. Put it in a directory on your web server.
 3. Configure the web server:
   - Apache: edit the RewriteBase directive in the
-  [.htaccess](https://github.com/moulecorp/pasthis/blob/master/.htaccess) if needed
+    [.htaccess](https://github.com/moulecorp/pasthis/blob/master/.htaccess) if
+    needed.
   - Nginx: see the provided
-  [nginx.conf](https://github.com/moulecorp/pasthis/blob/master/nginx.conf)
-4. Make sure that the folder is _readable_ and _writable_ by www-data, since this is
-required by php to be able to create the sqlite database
+    [nginx.conf](https://github.com/moulecorp/pasthis/blob/master/nginx.conf).
+4. Make sure that the folder is _readable_ and _writable_ by www-data, since
+this is required by php to be able to create the sqlite database.
 
-It is recommended to call the cron method on a regular basis to avoid an unwanted
-growing database and to delete expired pastes (also as a security concern). To do
-this on a GNU/Linux machine edit the /etc/crontab file and add the following line:
+It is recommended to call the cron method on a regular basis to avoid an
+unwanted growing database and to delete expired pastes (also as a security
+concern). To do this on a GNU/Linux machine edit the /etc/crontab file and add
+the following line:
 
 		@daily www-data php /path/to/pasthis/index.php
 
-Be aware expired pastes are deleted when requested or when the cron method is called.
-Without the previous cron configuration, their deletion can't be ensured. They just
-won't be displayed.
+Be aware expired pastes are deleted when requested or when the cron method is
+called. Without the previous cron configuration, their deletion can't be
+ensured. They just won't be displayed.
 
 ## Tips
 ### Command line tool
 
-A [command line tool](https://github.com/moulecorp/pasthis/blob/master/pasthis.pl) is
-available allowing you to send pastes from the console standard input (STDIN) or from
-a file. In order to take advantage of this tool, download it, make it executable and
-display the help output for more information:
+A [command line tool](https://github.com/moulecorp/pasthis/blob/master/pasthis.pl)
+is available allowing you to send pastes from the console standard input (STDIN)
+or from a file. In order to take advantage of this tool, download it, make it
+executable and display the help output for more information:
 
 		chmod +x ./pasthis.pl
 		./pasthis.pl --help
@@ -43,8 +45,8 @@ You can set a default url by editing the line *my $url = undef;*
 
 ### Tabulations
 
-Tabulations are handled in the textarea allowing you to write directly into Pasthis
-without changing the textarea focus.
+Tabulations are handled in the textarea allowing you to write directly into
+Pasthis without changing the textarea focus.
 
 ## Specifications:
   - Pasthis MUST supports color highlighting

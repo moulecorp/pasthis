@@ -27,6 +27,7 @@ my $mech   = WWW::Mechanize->new ();
 my $url    = undef;
 my $expire = '1d';
 my $file   = undef;
+my $wrap   = undef;
 my $hl     = undef;
 my $help   = undef;
 
@@ -35,6 +36,7 @@ GetOptions (
 	'url=s'    => \$url,
 	'expire=s' => \$expire,
 	'file=s'   => \$file,
+	'wrap'     => \$wrap,
 	'hl'       => \$hl,
 	'help'     => \$help,
 );
@@ -47,6 +49,7 @@ Usage:\t$0 [OPTIONS] STDIN
 OPTIONS
 \t--url URL\t\tSend paste to pasthis located at URL.
 \t--expire EXPIRATION\tDelete paste after EXPIRATION. Defaults to 1d.
+\t--wrap\t\t\tWrap long lines.
 \t--hl\t\t\tEnable syntax highlighting.
 \t--help\t\t\tPrint this help.
 
@@ -84,6 +87,7 @@ $mech->post (
 		'd'      => defined ($expirations{$expire}) ? $expirations{$expire} : 86400,
 		'p'      => defined ($file_content) ? $file_content : <STDIN>,
 		'ricard' => '',
+		defined ($wrap) ? ('wrap' => 1) : (),
 		defined ($hl) ? ('highlighting' => 1) : (),
 	]
 );

@@ -3,7 +3,7 @@
  *  Pasthis - Stupid Simple Pastebin
  *
  * Copyright (C) 2014 - 2015 Julien (jvoisin) Voisin - dustri.org
- * Copyright (C) 2014 - 2015 Antoine Tenart <atenart@n0.pe>
+ * Copyright (C) 2014 - 2015 Antoine Tenart <antoine.tenart@ack.tf>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

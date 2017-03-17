@@ -47,6 +47,12 @@ executable and display the help output for more information:
 
 You can set a default url by editing the line *my $url = undef;*
 
+#### Dependency
+
+You need to install the `WWW::Mechanize` Perl module. In Ubuntu, just run:
+
+		sudo apt install libwww-mechanize-perl
+
 ### Tabulations
 
 Tabulations are handled in the textarea allowing you to write directly into

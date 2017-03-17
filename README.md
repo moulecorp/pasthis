@@ -47,9 +47,9 @@ executable and display the help output for more information:
 
 You can set a default url by editing the line *my $url = undef;*
 
-#### Dependencies
+#### Dependency
 
-You may need to install the `WWW::Mechanize` plugin. In Ubuntu, just run:
+You need to install the `WWW::Mechanize` Perl module. In Ubuntu, just run:
 
 		sudo apt install libwww-mechanize-perl
 

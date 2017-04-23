@@ -1,7 +1,7 @@
 # Pasthis Caddy configuration
-# Requires "http.cors" plugin
-# - https://caddyserver.com/download/linux/amd64?plugins=http.cors
-# - https://caddyserver.com/download/linux/amd64/signature?plugins=http.cors
+# Requires no plugins
+# - https://caddyserver.com/download/linux/amd64
+# - https://caddyserver.com/download/linux/amd64/signature
 
 
 # TLS - defaults are sane
@@ -34,11 +34,6 @@ https://paste.yourdomain.net {
 	}
 
 	internal pasthis.db
-
-	cors / paste.yourdomain.net {
-		origin paste.yourdomain.net
-		methods GET
-	}
 
 	log / "/var/log/caddy/paste.yourdomain.net.access.log" "{>Referer} {>User-Agent} - {remote} - [{when}] {method} {uri} {proto} {status} {size}" {
 		rotate_size 100

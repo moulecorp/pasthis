@@ -79,7 +79,7 @@ final class Pasthis {
             print $ct;
         print '<div id="footer">';
         print 'Powered by <a href="https://github.com/moulecorp/pasthis">pasthis</a> - ';
-        print '<a href="./pasthis.pl">command-line tool</a>';
+        print '<a href="./pasthis.py">command-line tool</a>';
         print '</div>';
         print '</body>';
         print '</html>';

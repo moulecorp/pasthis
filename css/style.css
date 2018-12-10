@@ -8,6 +8,16 @@ body {
     margin: auto;
     padding: 5%;
     text-align: center;
+    font-family: sans-serif;
+}
+
+h1 {
+    margin-top: 0;
+    margin-bottom: 0.3em;
+    text-align: left;
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 3em;
 }
 
 a {

@@ -75,6 +75,7 @@ final class Pasthis {
         print '<link href="./css/prettify.css" rel="stylesheet" type="text/css" />';
         print '</head>';
         print '<body>';
+        print '<h1>Pasthis</h1>';
         while (list (, $ct) = each ($this->contents))
             print $ct;
         print '<div id="footer">';

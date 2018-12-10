@@ -2,8 +2,8 @@
 /**
  *  Pasthis - Stupid Simple Pastebin
  *
- * Copyright (C) 2014 - 2016 Julien (jvoisin) Voisin - dustri.org
- * Copyright (C) 2014 - 2016 Antoine Tenart <antoine.tenart@ack.tf>
+ * Copyright (C) 2014 - 2018 Julien (jvoisin) Voisin - dustri.org
+ * Copyright (C) 2014 - 2018 Antoine Tenart <antoine.tenart@ack.tf>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License

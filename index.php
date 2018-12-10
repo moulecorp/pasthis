@@ -125,7 +125,7 @@ final class Pasthis {
                 </select>
                 <input type="text" id="ricard" name="ricard"
                         placeholder="Do not fill me!" />
-                <input type="submit" value="Send paste">
+                <input type="submit" id="submit" value="Send paste">
                 <span id="left">
                 <input type="checkbox" id="wrap" name="wrap"> wrap long lines<br />
                 <input type="checkbox" id="highlighting" name="highlighting"> syntax highlighting<br />

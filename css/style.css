@@ -3,7 +3,7 @@ html {
     margin: 0;
 }
 body {
-    width: 50%;
+    width: 75%;
     height: 100%;
     margin: auto;
     padding: 5%;
@@ -33,6 +33,10 @@ form {
 #left {
     display: block;
     float: right;
+}
+
+#submit {
+    font-weight: bold;
 }
 
 textarea {

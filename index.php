@@ -140,7 +140,7 @@ final class Pasthis {
                      </li>
                  </ul>
                  <input type="text" id="ricard" name="ricard" placeholder="Do not fill me!" />
-                 <textarea autofocus required name="p"></textarea>
+                 <textarea autofocus required name="p" placeholder="Tab key can be used."></textarea>
              </form>'
         );
         $this->add_content ('<script src="./js/textarea.js"></script>');

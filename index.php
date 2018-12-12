@@ -70,6 +70,7 @@ final class Pasthis {
         print '<!DOCTYPE html>';
         print '<html>';
         print '<head>';
+        print'<meta name="viewport" content="width=device-width, initial-scale=1.0">';
         print '<title>'.htmlentities ($this->title).'</title>';
         print '<link href="./css/style.css" rel="stylesheet" type="text/css" />';
         print '<link href="./css/prettify.css" rel="stylesheet" type="text/css" />';
@@ -116,24 +117,31 @@ final class Pasthis {
     function prompt_paste () {
         $this->add_content (
             '<form method="post" action=".">
-                <select name="d" id="d">
-                    <option value="86400" selected hidden>Expiration (1 day)</option>
-                    <option value="-2">burn after reading</option>
-                    <option value="600">10 minutes</option>
-                    <option value="3600">1 hour</option>
-                    <option value="86400">1 day</option>
-                    <option value="604800">1 week</option>
-                    <option value="-1">eternal</option>
-                </select>
-                <input type="text" id="ricard" name="ricard"
-                        placeholder="Do not fill me!" />
-                <input type="submit" id="submit" value="Send paste">
-                <span id="left">
-                <input type="checkbox" id="wrap" name="wrap"><label for="wrap"> wrap long lines</label><br />
-                <input type="checkbox" id="highlighting" name="highlighting"><label for="highlighting"> syntax highlighting</label><br />
-                </span>
-                <textarea autofocus required name="p"></textarea>
-            </form>'
+                 <div id="left">
+                     <select name="d" id="d">
+                         <option value="86400" selected hidden>Expiration (1 day)</option>
+                         <option value="-2">burn after reading</option>
+                         <option value="600">10 minutes</option>
+                         <option value="3600">1 hour</option>
+                         <option value="86400">1 day</option>
+                         <option value="604800">1 week</option>
+                         <option value="-1">eternal</option>
+                     </select>
+                     <button type="submit">Send paste</button>
+                 </div>
+                 <ul id="right">
+                     <li>
+                         <input type="checkbox" id="wrap" name="wrap">
+                         <label for="wrap">wrap long lines</label>
+                     </li>
+                     <li>
+                         <input type="checkbox" id="highlighting" name="highlighting">
+                         <label for="highlighting">syntax highlighting</label>
+                     </li>
+                 </ul>
+                 <input type="text" id="ricard" name="ricard" placeholder="Do not fill me!" />
+                 <textarea autofocus required name="p"></textarea>
+             </form>'
         );
         $this->add_content ('<script src="./js/textarea.js"></script>');
 
@@ -252,7 +260,7 @@ final class Pasthis {
         }
 
         if ($fail) {
-            $this->add_content ('<p>Meh, no paste for this id :(</p>');
+            $this->add_content ('<div id="warning">Meh, no paste for this id :(</div>');
             $this->prompt_paste ();
         } else {
             header ('X-Content-Type-Options: nosniff');
@@ -270,10 +278,8 @@ final class Pasthis {
                     $this->add_content ('<script src="./js/prettify.js"></script>', true);
                 }
                 $this->add_content (
-                    '<div id="links">
-                         <a href="./'.$id.'@raw">Raw</a> - <a href="./">New paste</a>
-                         <span id="left">'.$this->remaining_time ($result['deletion_date']).'</span>
-                     </div>'
+                    '<div id="left"><a href="./'.$id.'@raw">Raw</a> | <a href="./">New paste</a></div>
+                     <div id="right">'.$this->remaining_time ($result['deletion_date']).'</div>'
                 );
                 $class = 'prettyprint linenums';
                 if ($result['wrap'])

@@ -7,14 +7,13 @@ body {
     height: 100%;
     margin: auto;
     padding: 5%;
-    text-align: center;
     font-family: sans-serif;
+    color: #333333;
 }
 
 h1 {
     margin-top: 0;
-    margin-bottom: 0.3rem;
-    text-align: left;
+    margin-bottom: 1rem;
     text-transform: uppercase;
     font-weight: 300;
     font-size: 3rem;
@@ -22,44 +21,83 @@ h1 {
 
 a {
     color: black;
-    text-decoration: none;
-}
-a:hover {
-    text-decoration: underline;
 }
 
-div#links {
-    display: block;
-    text-align: left;
-    font-size: 0.9rem;
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
 
-form {
-    text-align: left;
-    height: 75%;
-    font-size: 0.9rem;
+li {
+    margin-top: 0.2rem;
 }
 
 #left {
-    display: block;
-    float: right;
+    float: left;
+    margin-bottom: 1rem;
 }
 
-#submit {
-    font-weight: bold;
+#right {
+    float: right;
+    margin-bottom: 1rem;
+}
+
+#warning {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+button {
+    background-color: #6c6c6c;
+    color: white;
+    padding: .375rem .75rem;
+    border: 2px solid #6c6c6c;
+    border-radius: .25rem;
+}
+
+button:hover {
+    background-color: #4c4c4c;
+    border-color: #4c4c4c;
+    cursor: pointer;
+}
+
+select {
+    background-color: inherit;
+    padding: .375rem .75rem;
+    border: 1px solid #6c6c6c;
+    border-radius: .25rem;
+    color: inherit;
+}
+
+button:active,
+button:focus,
+select:focus {
+    outline: none;
+    box-shadow: 0 0 3pt 2pt lightblue;
+}
+
+form {
+    height: 75%;
+}
+
+input {
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 0;
+    vertical-align: middle;
 }
 
 textarea {
-    position: relative;
-    margin-top: 1rem;
-    min-height: calc(100% - 5rem);
     width: calc(100% - 2rem);
+    min-height: calc(100% - 6rem);
     resize: vertical;
     border: 1px solid gray;
     padding: 1rem;
     outline: none;
     font-family: monospace;
     line-height: 1.5;
+    color: inherit;
 }
 textarea:focus {
     border: 0;
@@ -70,12 +108,12 @@ pre {
     margin: 1.5rem 0 0 0 !important;
     padding: 1rem !important;
     width: calc(100% - 2rem) !important;
-    min-height: calc(75% - 5rem) !important;
+    min-height: calc(75% - 6rem) !important;
     color: black;
-    text-align: left;
     overflow-y: auto;
     border-radius: 0 !important;
     line-height: 1.5 !important;
+    color: inherit;
 }
 
 .wrap {
@@ -85,9 +123,25 @@ pre {
 #footer {
     margin-top: 2rem;
     margin-bottom: 1rem;
-    font-size: 0.75rem;
+    font-size: 0.85rem;
+    text-align: center;
 }
 
 #ricard {
     display: none;
+}
+
+@media screen and (max-width: 800px) {
+    #left, #right {
+        display: inherit;
+        float: none;
+    }
+
+    textarea, pre {
+      min-height: calc(100% - 9rem);
+    }
+
+    li {
+        width: 100%;
+    }
 }

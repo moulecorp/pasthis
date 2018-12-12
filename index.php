@@ -79,8 +79,9 @@ final class Pasthis {
         while (list (, $ct) = each ($this->contents))
             print $ct;
         print '<div id="footer">';
-        print 'Powered by <a href="https://github.com/moulecorp/pasthis">pasthis</a> - ';
-        print '<a href="./pasthis.py">command-line tool</a>';
+        print 'Powered by <a href="https://github.com/moulecorp/pasthis">Pasthis</a> | ';
+        print '<a href="./pasthis.py">Command-line tool</a> | ';
+        print 'No statistics, no list.';
         print '</div>';
         print '</body>';
         print '</html>';

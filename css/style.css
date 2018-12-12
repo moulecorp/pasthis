@@ -13,11 +13,11 @@ body {
 
 h1 {
     margin-top: 0;
-    margin-bottom: 0.3em;
+    margin-bottom: 0.3rem;
     text-align: left;
     text-transform: uppercase;
     font-weight: 300;
-    font-size: 3em;
+    font-size: 3rem;
 }
 
 a {
@@ -31,13 +31,13 @@ a:hover {
 div#links {
     display: block;
     text-align: left;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
 form {
     text-align: left;
     height: 75%;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 }
 
 #left {
@@ -51,12 +51,12 @@ form {
 
 textarea {
     position: relative;
-    margin-top: 1em;
-    min-height: calc(100% - 5em);
-    width: calc(100% - 2em);
+    margin-top: 1rem;
+    min-height: calc(100% - 5rem);
+    width: calc(100% - 2rem);
     resize: vertical;
     border: 1px solid gray;
-    padding: 1em;
+    padding: 1rem;
     outline: none;
     font-family: monospace;
     line-height: 1.5;
@@ -67,10 +67,10 @@ textarea:focus {
 }
 
 pre {
-    margin: 1.5em 0 0 0 !important;
-    padding: 1em !important;
-    width: calc(100% - 2em) !important;
-    min-height: calc(75% - 5em) !important;
+    margin: 1.5rem 0 0 0 !important;
+    padding: 1rem !important;
+    width: calc(100% - 2rem) !important;
+    min-height: calc(75% - 5rem) !important;
     color: black;
     text-align: left;
     overflow-y: auto;
@@ -83,9 +83,9 @@ pre {
 }
 
 #footer {
-    margin-top: 2em;
-    margin-bottom: 1em;
-    font-size: 0.75em;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    font-size: 0.75rem;
 }
 
 #ricard {

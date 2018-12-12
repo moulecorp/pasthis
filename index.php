@@ -116,12 +116,12 @@ final class Pasthis {
     function prompt_paste () {
         $this->add_content (
             '<form method="post" action=".">
-                <label for="d">Expiration: </label>
                 <select name="d" id="d">
+                    <option value="86400" selected hidden>Expiration (1 day)</option>
                     <option value="-2">burn after reading</option>
                     <option value="600">10 minutes</option>
                     <option value="3600">1 hour</option>
-                    <option value="86400" selected="selected">1 day</option>
+                    <option value="86400">1 day</option>
                     <option value="604800">1 week</option>
                     <option value="-1">eternal</option>
                 </select>

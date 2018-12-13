@@ -15,6 +15,7 @@ highlighting.
     needed.
   - Nginx: see the provided
     [nginx.conf](https://github.com/moulecorp/pasthis/blob/master/nginx.conf).
+  - Caddy: see the provided Caddyfile
 4. Make sure that the folder is _readable_ and _writable_ by www-data, since
 this is required by php to be able to create the sqlite database.
 
@@ -23,7 +24,7 @@ unwanted growing database and to delete expired pastes (also as a security
 concern). To do this on a GNU/Linux machine edit the /etc/crontab file and add
 the following line:
 
-		@daily www-data php /path/to/pasthis/index.php
+		*/10 * * * * www-data php /path/to/pasthis/index.php
 
 Be aware expired pastes are deleted when requested or when the cron method is
 called. Without the previous cron configuration, their deletion can't be
@@ -31,7 +32,7 @@ ensured. They just won't be displayed.
 
 ## Update
 1. Update to the latest version (keep the database!)
-2. Run update.php
+2. Run $ php update.php
 
 ## Tips
 ### Command line tool
@@ -41,17 +42,9 @@ is available allowing you to send pastes from the console standard input (STDIN)
 or from a file. In order to take advantage of this tool, download it, make it
 executable and display the help output for more information:
 
-		chmod +x ./pasthis.pl
-		./pasthis.pl --help
-		./pasthis.pl --url http://www.example.net/pasthis/ --file paste.txt
-
-You can set a default url by editing the line *my $url = undef;*
-
-#### Dependency
-
-You need to install the `WWW::Mechanize` Perl module. In Ubuntu, just run:
-
-		sudo apt install libwww-mechanize-perl
+		chmod +x ./pasthis.py
+		./pasthis.py --help
+		./pasthis.py --url http://www.example.net/pasthis/ file.txt
 
 ### Tabulations
 
@@ -97,12 +90,12 @@ The user can access the raw version of a paste by appending
 		modify it under the terms of the GNU General Public License
 		as published by the Free Software Foundation; either version 2
 		of the License, or (at your option) any later version.
-    
+
 		This program is distributed in the hope that it will be useful,
 		but WITHOUT ANY WARRANTY; without even the implied warranty of
 		MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 		GNU General Public License for more details.
-    
+
 		You should have received a copy of the GNU General Public License
 		along with this program; if not, write to the Free Software
 		Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA

@@ -23,21 +23,21 @@
 
 final class Pasthis {
     public $title;
-    private $contents = array ();
+    private $contents = array();
     private $db;
 
-    function __construct ($title = 'Pasthis') {
+    function __construct($title = 'Pasthis') {
         $this->title = $title;
         $dsn = 'sqlite:' . dirname(__FILE__) .'/pasthis.db';
         try {
-            $this->db = new PDO ($dsn);
-            $this->db->setAttribute (PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
-            $this->db->setAttribute (PDO::ATTR_EMULATE_PREPARES, false);
-        } catch (PDOException $e) {
-            die ('Unable to open database: ' . $e->getMessage ());
+            $this->db = new PDO($dsn);
+            $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+            $this->db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+        } catch(PDOException $e) {
+            die('Unable to open database: ' . $e->getMessage());
         }
-        $this->db->exec ('pragma auto_vacuum = 1');
-        $this->db->exec (
+        $this->db->exec('pragma auto_vacuum = 1');
+        $this->db->exec(
             "CREATE TABLE if not exists pastes (
                 id PRIMARY KEY,
                 deletion_date TIMESTAMP,
@@ -46,7 +46,7 @@ final class Pasthis {
                 paste BLOB
             );"
         );
-        $this->db->exec (
+        $this->db->exec(
             "CREATE TABLE if not exists users (
                 hash PRIMARY KEY,
                 nopaste_period TIMESTAMP,
@@ -55,29 +55,29 @@ final class Pasthis {
         );
     }
 
-    function __destruct () {
+    function __destruct() {
         $this->db = null;
     }
 
-    private function add_content ($content, $prepend = false) {
+    private function add_content($content, $prepend = false) {
         if (!$prepend)
             $this->contents[] = $content;
         else
-            array_unshift ($this->contents, $content);
+            array_unshift($this->contents, $content);
     }
 
-    private function render () {
+    private function render() {
         print '<!DOCTYPE html>';
         print '<html>';
         print '<head>';
         print'<meta name="viewport" content="width=device-width, initial-scale=1.0">';
-        print '<title>'.htmlentities ($this->title).'</title>';
+        print '<title>'.htmlentities($this->title).'</title>';
         print '<link href="./css/style.css" rel="stylesheet" type="text/css" />';
         print '<link href="./css/prettify.css" rel="stylesheet" type="text/css" />';
         print '</head>';
         print '<body>';
         print '<h1>Pasthis</h1>';
-        while (list (, $ct) = each ($this->contents))
+        while (list(, $ct) = each($this->contents))
             print $ct;
         print '<div id="footer">';
         print 'Powered by <a href="https://github.com/moulecorp/pasthis">Pasthis</a> | ';
@@ -86,10 +86,10 @@ final class Pasthis {
         print '</div>';
         print '</body>';
         print '</html>';
-        exit ();
+        exit();
     }
 
-    private function remaining_time ($timestamp) {
+    private function remaining_time($timestamp) {
         if ($timestamp == -1)
             return 'Never expires.';
         elseif ($timestamp == 0)
@@ -97,23 +97,23 @@ final class Pasthis {
         elseif ($timestamp == -2)
             return 'One reading remaining.';
 
-        $format = function ($t,$s) { return $t ? $t.' '.$s.($t>1 ? 's' : '' ).' ' : ''; };
+        $format = function($t,$s) { return $t ? $t.' '.$s.($t>1 ? 's' : '' ).' ' : ''; };
 
-        $expiration = new DateTime ('@'.$timestamp);
-        $interval = $expiration->diff (new DateTime (), true);
+        $expiration = new DateTime('@'.$timestamp);
+        $interval = $expiration->diff(new DateTime(), true);
 
-        $ret = 'Expires in '.$format ($interval->d, 'day');
-        $ret .= $format ($interval->h, 'hour');
+        $ret = 'Expires in '.$format($interval->d, 'day');
+        $ret .= $format($interval->h, 'hour');
         if ($interval->d === 0) {
-            $ret .= $format ($interval->i, 'minute');
+            $ret .= $format($interval->i, 'minute');
             if ($interval->h === 0)
-                $ret .= $format ($interval->s, 'second');
+                $ret .= $format($interval->s, 'second');
         }
-        return rtrim ($ret).'.';
+        return rtrim($ret).'.';
     }
 
-    function prompt_paste () {
-        $this->add_content (
+    function prompt_paste() {
+        $this->add_content(
             '<form method="post" action=".">
                  <div id="left">
                      <select name="d" id="d">
@@ -141,157 +141,157 @@ final class Pasthis {
                  <textarea autofocus required name="p" placeholder="Tab key can be used."></textarea>
              </form>'
         );
-        $this->add_content ('<script src="./js/textarea.js"></script>');
+        $this->add_content('<script src="./js/textarea.js"></script>');
 
-        $this->render ();
+        $this->render();
     }
 
-    private function generate_id () {
-        $query = $this->db->prepare (
+    private function generate_id() {
+        $query = $this->db->prepare(
             "SELECT id FROM pastes
              WHERE id = :uniqid;"
         );
-        $query->bindParam (':uniqid', $uniqid, PDO::PARAM_STR, 6);
+        $query->bindParam(':uniqid', $uniqid, PDO::PARAM_STR, 6);
 
         do {
-            $uniqid = substr (uniqid (), -6);
-            $query->execute ();
-        } while ($query->fetch () != false);
+            $uniqid = substr(uniqid(), -6);
+            $query->execute();
+        } while ($query->fetch() != false);
 
         return $uniqid;
     }
 
-    private function nopaste_period ($degree) {
-        return time () + intval (pow ($degree, 2.5));
+    private function nopaste_period($degree) {
+        return time() + intval(pow($degree, 2.5));
     }
 
-    private function check_spammer () {
-        $hash = sha1 ($_SERVER['REMOTE_ADDR']);
+    private function check_spammer() {
+        $hash = sha1($_SERVER['REMOTE_ADDR']);
 
-        $query = $this->db->prepare (
+        $query = $this->db->prepare(
             "SELECT * FROM users
              WHERE hash = :hash"
         );
-        $query->bindValue (':hash', $hash, PDO::PARAM_STR);
-        $query->execute ();
-        $result = $query->fetch ();
+        $query->bindValue(':hash', $hash, PDO::PARAM_STR);
+        $query->execute();
+        $result = $query->fetch();
 
-        $in_period = (!empty ($result) and time () < $result['nopaste_period']);
-        $obvious_spam = (!isset ($_POST['ricard']) or !empty ($_POST['ricard']));
+        $in_period = (!empty($result) and time() < $result['nopaste_period']);
+        $obvious_spam = (!isset($_POST['ricard']) or !empty($_POST['ricard']));
 
         $degree = $in_period ? $result['degree']+1 : ($obvious_spam ? 512 : 1);
-        $nopaste_period = $this->nopaste_period ($degree);
+        $nopaste_period = $this->nopaste_period($degree);
 
-        $query = $this->db->prepare (
+        $query = $this->db->prepare(
             "REPLACE INTO users
              (hash, nopaste_period, degree)
              VALUES (:hash, :nopaste_period, :degree);"
         );
-        $query->bindValue (':hash', $hash, PDO::PARAM_STR);
-        $query->bindValue (':nopaste_period', $nopaste_period, PDO::PARAM_INT);
-        $query->bindValue (':degree', $degree, PDO::PARAM_INT);
-        $query->execute ();
+        $query->bindValue(':hash', $hash, PDO::PARAM_STR);
+        $query->bindValue(':nopaste_period', $nopaste_period, PDO::PARAM_INT);
+        $query->bindValue(':degree', $degree, PDO::PARAM_INT);
+        $query->execute();
 
         if ($in_period or $obvious_spam)
-            die ('Spam');
+            die('Spam');
     }
 
-    function add_paste ($deletion_date, $highlighting, $wrap, $paste) {
+    function add_paste($deletion_date, $highlighting, $wrap, $paste) {
         $this->check_spammer();
 
-        $deletion_date = intval ($deletion_date);
+        $deletion_date = intval($deletion_date);
 
         if ($deletion_date > 0)
-            $deletion_date += time ();
+            $deletion_date += time();
 
-        $uniqid = $this->generate_id ();
+        $uniqid = $this->generate_id();
 
-        $query = $this->db->prepare (
+        $query = $this->db->prepare(
             "INSERT INTO pastes (id, deletion_date, highlighting, wrap, paste)
              VALUES (:uniqid, :deletion_date, :highlighting, :wrap, :paste);"
         );
-        $query->bindValue (':uniqid', $uniqid, PDO::PARAM_STR);
-        $query->bindValue (':deletion_date', $deletion_date, PDO::PARAM_INT);
-        $query->bindValue (':highlighting', $highlighting, PDO::PARAM_INT);
-        $query->bindValue (':wrap', $wrap, PDO::PARAM_INT);
-        $query->bindValue (':paste', $paste, PDO::PARAM_STR);
-        $query->execute ();
+        $query->bindValue(':uniqid', $uniqid, PDO::PARAM_STR);
+        $query->bindValue(':deletion_date', $deletion_date, PDO::PARAM_INT);
+        $query->bindValue(':highlighting', $highlighting, PDO::PARAM_INT);
+        $query->bindValue(':wrap', $wrap, PDO::PARAM_INT);
+        $query->bindValue(':paste', $paste, PDO::PARAM_STR);
+        $query->execute();
 
-        header ('location: ./' . $uniqid);
+        header('location: ./' . $uniqid);
     }
 
-    function show_paste ($param) {
-        $id = str_replace ("@raw", "", $param);
-        $is_raw = intval(strtolower (substr ($param, -4)) == "@raw");
+    function show_paste($param) {
+        $id = str_replace("@raw", "", $param);
+        $is_raw = intval(strtolower(substr($param, -4)) == "@raw");
 
         $fail = false;
         $query = $this->db->prepare(
             "SELECT * FROM pastes
              WHERE id = :id;"
         );
-        $query->bindValue (':id', $id, PDO::PARAM_STR);
-        $query->execute ();
-        $result = $query->fetch ();
+        $query->bindValue(':id', $id, PDO::PARAM_STR);
+        $query->execute();
+        $result = $query->fetch();
 
         if ($result == null) {
             $fail = true;
-        } elseif ($result['deletion_date'] < time ()
+        } elseif ($result['deletion_date'] < time()
                 and $result['deletion_date'] >= 0) {
-            $query = $this->db->prepare (
+            $query = $this->db->prepare(
                 "DELETE FROM pastes
                  WHERE id = :id;"
             );
-            $query->bindValue (':id', $id, PDO::PARAM_STR);
-            $query->execute ();
+            $query->bindValue(':id', $id, PDO::PARAM_STR);
+            $query->execute();
 
             /* do not fail on "burn after reading" pastes */
             if ($result['deletion_date'] != 0)
                 $fail = true;
         } elseif ($result['deletion_date'] == -2) {
-            $query = $this->db->prepare (
+            $query = $this->db->prepare(
                 "UPDATE pastes
                  SET deletion_date=0
                  WHERE id = :id;"
             );
-            $query->bindValue (':id', $id, PDO::PARAM_STR);
-            $query->execute ();
+            $query->bindValue(':id', $id, PDO::PARAM_STR);
+            $query->execute();
         }
 
         if ($fail) {
-            $this->add_content ('<div id="warning">Meh, no paste for this id :(</div>');
-            $this->prompt_paste ();
+            $this->add_content('<div id="warning">Meh, no paste for this id :(</div>');
+            $this->prompt_paste();
         } else {
-            header ('X-Content-Type-Options: nosniff');
+            header('X-Content-Type-Options: nosniff');
 
             if ($is_raw) {
-                header ('Content-Type: text/plain; charset=utf-8');
+                header('Content-Type: text/plain; charset=utf-8');
 
                 print $result['paste'];
-                exit ();
+                exit();
             } else {
-                header ('Content-Type: text/html; charset=utf-8');
+                header('Content-Type: text/html; charset=utf-8');
 
                 if ($result['highlighting']) {
-                    $this->add_content ('<script>window.onload=function(){prettyPrint();}</script>');
-                    $this->add_content ('<script src="./js/prettify.js"></script>', true);
+                    $this->add_content('<script>window.onload=function(){prettyPrint();}</script>');
+                    $this->add_content('<script src="./js/prettify.js"></script>', true);
                 }
-                $this->add_content (
+                $this->add_content(
                     '<div id="left"><a href="./'.$id.'@raw">Raw</a> | <a href="./">New paste</a></div>
-                     <div id="right">'.$this->remaining_time ($result['deletion_date']).'</div>'
+                     <div id="right">'.$this->remaining_time($result['deletion_date']).'</div>'
                 );
                 $class = 'prettyprint linenums';
                 if ($result['wrap'])
                     $class .= ' wrap';
 
-                $this->add_content ('<pre class="'.$class.'">'.htmlentities ($result['paste']).'</pre>');
+                $this->add_content('<pre class="'.$class.'">'.htmlentities($result['paste']).'</pre>');
             }
         }
 
-        $this->render ();
+        $this->render();
     }
 
-    function cron () {
-        $this->db->exec (
+    function cron() {
+        $this->db->exec(
             "DELETE FROM pastes
              WHERE deletion_date > 0
              AND strftime ('%s','now') > deletion_date;
@@ -301,21 +301,21 @@ final class Pasthis {
     }
 }
 
-$pastebin = new Pasthis ();
+$pastebin = new Pasthis();
 
-if (php_sapi_name () == 'cli') {
-    $pastebin->cron ();
-    exit ();
+if (php_sapi_name() == 'cli') {
+    $pastebin->cron();
+    exit();
 }
 
-if (isset ($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'on')
-    exit ('Meh, not accessed over HTTPS.');
+if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'on')
+    exit('Meh, not accessed over HTTPS.');
 
-if (isset ($_GET['p']))
-    $pastebin->show_paste ($_GET['p']);
-elseif (isset ($_POST['d']) && isset ($_POST['p']))
-    $pastebin->add_paste ($_POST['d'], isset ($_POST['highlighting']),
-                          isset ($_POST['wrap']), $_POST['p']);
+if (isset($_GET['p']))
+    $pastebin->show_paste($_GET['p']);
+elseif (isset($_POST['d']) && isset($_POST['p']))
+    $pastebin->add_paste($_POST['d'], isset($_POST['highlighting']),
+                         isset($_POST['wrap']), $_POST['p']);
 else
-    $pastebin->prompt_paste ();
+    $pastebin->prompt_paste();
 ?>

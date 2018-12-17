@@ -90,6 +90,7 @@ input {
 }
 
 textarea {
+    position: relative;
     width: calc(100% - 2rem);
     min-height: calc(100% - 6rem);
     resize: vertical;

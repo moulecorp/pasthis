@@ -72,10 +72,13 @@ select {
 }
 
 button:active,
+select:active {
+    outline: none;
+    box-shadow: 0 0 1pt 1pt lightblue;
+}
 button:focus,
 select:focus {
     outline: none;
-    box-shadow: 0 0 3pt 2pt lightblue;
 }
 
 form {
@@ -102,8 +105,7 @@ textarea {
     color: inherit;
 }
 textarea:focus {
-    border: 0;
-    box-shadow: 0 0 1px 1px gray;
+    box-shadow: 0 0 1pt 1pt lightblue;
 }
 
 pre {

@@ -26,7 +26,7 @@ final class Pasthis {
     private $contents = array();
     private $db;
 
-    function __construct($title = 'Pasthis') {
+    function __construct($title = 'Pasthis - Simple pastebin') {
         $this->title = $title;
         $dsn = 'sqlite:' . dirname(__FILE__) .'/pasthis.db';
         try {

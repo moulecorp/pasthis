@@ -308,6 +308,9 @@ if (php_sapi_name () == 'cli') {
     exit ();
 }
 
+if (isset ($_SERVER['HTTPS']) && $_SERVER['HTTPS'] != 'on')
+    exit ('Meh, not accessed over HTTPS.');
+
 if (isset ($_GET['p']))
     $pastebin->show_paste ($_GET['p']);
 elseif (isset ($_POST['d']) && isset ($_POST['p']))

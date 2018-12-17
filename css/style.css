@@ -54,6 +54,7 @@ button {
     padding: .375rem .75rem;
     border: 2px solid #6c6c6c;
     border-radius: .25rem;
+    margin-left: 0.5rem;
 }
 
 button:hover {

@@ -102,14 +102,12 @@ final class Pasthis {
         $expiration = new DateTime ('@'.$timestamp);
         $interval = $expiration->diff (new DateTime (), true);
 
-        $ret = 'Expires in '.$format ($interval->days, 'day');
-        if ($interval->days < 31) {
-            $ret .= $format ($interval->h, 'hour');
-            if ($interval->d === 0) {
-                $ret .= $format ($interval->i, 'minute');
-                if ($interval->h === 0)
-                    $ret .= $format ($interval->s, 'second');
-            }
+        $ret = 'Expires in '.$format ($interval->d, 'day');
+        $ret .= $format ($interval->h, 'hour');
+        if ($interval->d === 0) {
+            $ret .= $format ($interval->i, 'minute');
+            if ($interval->h === 0)
+                $ret .= $format ($interval->s, 'second');
         }
         return rtrim ($ret).'.';
     }

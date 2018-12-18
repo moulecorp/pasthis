@@ -2,6 +2,10 @@
 	Deny from all
 </Files>
 
+<Directory resources>
+	Deny from all
+</Directory>
+
 <IfModule !mod_rewrite.c>
 	Redirect 500
 </IfModule>

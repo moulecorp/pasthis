@@ -34,6 +34,7 @@ https://paste.yourdomain.net {
 	}
 
 	internal pasthis.db
+	internal resources
 
 	log / "/var/log/caddy/paste.yourdomain.net.access.log" "{>Referer} {>User-Agent} - {remote} - [{when}] {method} {uri} {proto} {status} {size}" {
 		rotate_size 100

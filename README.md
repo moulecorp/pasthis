@@ -1,7 +1,5 @@
 # _Pasthis_
 
-## Privacy, security, simplicity
-
 _Pasthis_ is a pastebin written in [PHP](https://www.php.net) using
 [SQLite](https://sqlite.org/) as database backend and
 [prettify](https://code.google.com/p/google-code-prettify/) to handle the syntax
@@ -9,7 +7,7 @@ highlighting. This project is licensed under [GPLv2+](LICENSE).
 
 ![Pasthis screenshot](resources/screenshot.jpg)
 
-_Pasthis_ was designed with privacy, security and simplicity in mind:
+## Privacy, security, simplicity
 
 - Expired pastes are automatically deleted.
 - Paste IDs aren't predictable (their URL cannot be guessed easily).

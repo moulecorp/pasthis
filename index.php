@@ -141,7 +141,7 @@ final class Pasthis {
                  <textarea autofocus required name="p" placeholder="Tab key can be used."></textarea>
              </form>'
         );
-        $this->add_content('<script src="./js/textarea.js"></script>');
+        $this->add_content('<script defer src="./js/textarea.js"></script>');
 
         $this->render();
     }
@@ -273,7 +273,7 @@ final class Pasthis {
 
                 if ($result['highlighting']) {
                     $this->add_content('<script>window.onload=function(){prettyPrint();}</script>');
-                    $this->add_content('<script src="./js/prettify.js"></script>', true);
+                    $this->add_content('<script defer src="./js/prettify.js"></script>', true);
                 }
                 $this->add_content(
                     '<div id="left"><a href="./'.$id.'@raw">Raw</a> | <a href="./">New paste</a></div>

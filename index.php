@@ -81,7 +81,7 @@ final class Pasthis {
             print $ct;
         print '<div id="footer">';
         print 'Powered by <a href="https://github.com/moulecorp/pasthis">Pasthis</a> | ';
-        print '<a href="./pasthis.py">Command-line tool</a> | ';
+        print '<a href="./?cli">Command-line tool</a> | ';
         print 'No statistics, no list.';
         print '</div>';
         print '</body>';
@@ -290,6 +290,17 @@ final class Pasthis {
         $this->render();
     }
 
+    function serve_cli() {
+        $script = file_get_contents('./pasthis.py');
+        $script = str_replace('__PASTHIS_DOMAIN_NAME__', $_SERVER['SERVER_NAME'], $script);
+
+        header('Content-Type: text/plain; charset=utf-8');
+        header('Content-Disposition: inline; filename="pasthis"');
+
+        print $script;
+        exit();
+    }
+
     function cron() {
         $this->db->exec(
             "DELETE FROM pastes
@@ -316,6 +327,8 @@ if (isset($_GET['p']))
 elseif (isset($_POST['d']) && isset($_POST['p']))
     $pastebin->add_paste($_POST['d'], isset($_POST['highlighting']),
                          isset($_POST['wrap']), $_POST['p']);
+elseif (isset($_GET['cli']))
+    $pastebin->serve_cli();
 else
     $pastebin->prompt_paste();
 ?>

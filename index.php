@@ -70,22 +70,25 @@ final class Pasthis {
         print '<!DOCTYPE html>';
         print '<html>';
         print '<head>';
-        print'<meta name="viewport" content="width=device-width, initial-scale=1.0">';
-        print '<title>'.htmlentities($this->title).'</title>';
-        print '<link href="./css/style.css" rel="stylesheet" type="text/css" />';
-        print '<link href="./css/prettify.css" rel="stylesheet" type="text/css" />';
+        print '<meta name="viewport" content="width=device-width, initial-scale=1.0">';
+        print '<title>Pasthis - Simple pastebin</title>';
+        print '<link href="./css/normalize.css" rel="stylesheet" type="text/css">';
+        print '<link href="./css/skeleton.css" rel="stylesheet" type="text/css">';
+        print '<link href="./css/style.css" rel="stylesheet" type="text/css">';
+        print '<link href="./css/prettify.css" rel="stylesheet" type="text/css">';
         print '</head>';
         print '<body>';
+        print '<div class="container">';
         print '<h1>Pasthis</h1>';
         while (list(, $ct) = each($this->contents))
             print $ct;
-        print '<div id="footer">';
+        print '<div class="footer">';
         print 'Powered by <a href="https://github.com/moulecorp/pasthis">Pasthis</a> | ';
         print '<a href="./?cli">Command-line tool</a> | ';
         print 'No statistics, no list.';
         print '</div>';
+        print '</div>';
         print '</body>';
-        print '</html>';
         exit();
     }
 
@@ -115,7 +118,7 @@ final class Pasthis {
     function prompt_paste() {
         $this->add_content(
             '<form method="post" action=".">
-                 <div id="left">
+                 <div class="row">
                      <select name="d" id="d">
                          <option value="86400" selected hidden>Expiration (1 day)</option>
                          <option value="-2">burn after reading</option>
@@ -126,19 +129,21 @@ final class Pasthis {
                          <option value="-1">eternal</option>
                      </select>
                      <button type="submit">Send paste</button>
+                     <div class="right">
+                         <label>
+                             <input type="checkbox" name="wrap">
+                             <span class="label-body">wrap long lines</span>
+                         </label>
+                         <label>
+                             <input type="checkbox" name="highlighting">
+                             <span class="label-body" for="">syntax highlighting</span>
+                         </label>
+                     </div>
                  </div>
-                 <ul id="right">
-                     <li>
-                         <input type="checkbox" id="wrap" name="wrap">
-                         <label for="wrap">wrap long lines</label>
-                     </li>
-                     <li>
-                         <input type="checkbox" id="highlighting" name="highlighting">
-                         <label for="highlighting">syntax highlighting</label>
-                     </li>
-                 </ul>
-                 <input type="text" id="ricard" name="ricard" placeholder="Do not fill me!" />
-                 <textarea autofocus required name="p" placeholder="Tab key can be used."></textarea>
+                 <div class="row">
+                     <input type="text" id="ricard" name="ricard" placeholder="Do not fill me!">
+                     <textarea autofocus required name="p" placeholder="Tab key can be used."></textarea>
+                 </div>
              </form>'
         );
         $this->add_content('<script defer src="./js/textarea.js"></script>');
@@ -258,7 +263,7 @@ final class Pasthis {
         }
 
         if ($fail) {
-            $this->add_content('<div id="warning">Meh, no paste for this id :(</div>');
+            $this->add_content('<div class="warning">Meh, no paste for this id :(</div>');
             $this->prompt_paste();
         } else {
             header('X-Content-Type-Options: nosniff');
@@ -271,15 +276,19 @@ final class Pasthis {
             } else {
                 header('Content-Type: text/html; charset=utf-8');
 
+                $class = 'prettyprint linenums';
+
                 if ($result['highlighting']) {
                     $this->add_content('<script>window.onload=function(){prettyPrint();}</script>');
                     $this->add_content('<script defer src="./js/prettify.js"></script>', true);
+                    $class .= ' highlighting';
                 }
+
                 $this->add_content(
-                    '<div id="left"><a href="./'.$id.'@raw">Raw</a> | <a href="./">New paste</a></div>
-                     <div id="right">'.$this->remaining_time($result['deletion_date']).'</div>'
+                    '<a href="./'.$id.'@raw">Raw</a> | <a href="./">New paste</a>
+                     <div class="right">'.$this->remaining_time($result['deletion_date']).'</div>'
                 );
-                $class = 'prettyprint linenums';
+
                 if ($result['wrap'])
                     $class .= ' wrap';
 

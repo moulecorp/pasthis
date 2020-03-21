@@ -1,9 +1,10 @@
 # _Pasthis_
 
 _Pasthis_ is a pastebin written in [PHP](https://www.php.net) using
-[SQLite](https://sqlite.org/) as database backend and
-[prettify](https://code.google.com/p/google-code-prettify/) to handle the syntax
-highlighting. This project is licensed under [GPLv2+](LICENSE).
+[SQLite](https://sqlite.org/) as database backend,
+[prettify](https://code.google.com/p/google-code-prettify/) to handle syntax
+highlighting and [skeleton](http://getskeleton.com). This project is
+licensed under [GPLv2+](LICENSE).
 
 ![Pasthis screenshot](resources/screenshot.jpg)
 

@@ -8,6 +8,12 @@ body {
     width: 100%;
 }
 
+@media (min-width: 400px) {
+    .container {
+        width: 80%;
+    }
+}
+
 a {
     color: black;
 }

@@ -119,7 +119,7 @@ final class Pasthis {
         $this->add_content(
             '<form method="post" action=".">
                  <div class="row">
-                     <select name="d" id="d">
+                     <select name="d">
                          <option value="86400" selected hidden>Expiration (1 day)</option>
                          <option value="-2">burn after reading</option>
                          <option value="600">10 minutes</option>

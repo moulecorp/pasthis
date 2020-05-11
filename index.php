@@ -300,8 +300,9 @@ final class Pasthis {
     }
 
     function serve_cli() {
+        $uri = $_SERVER['SERVER_NAME'] . explode('?', $_SERVER['REQUEST_URI'])[0];
         $script = file_get_contents('./pasthis.py');
-        $script = str_replace('__PASTHIS_DOMAIN_NAME__', $_SERVER['SERVER_NAME'], $script);
+        $script = str_replace('__PASTHIS_DOMAIN_NAME__', $uri, $script);
 
         header('Content-Type: text/plain; charset=utf-8');
         header('Content-Disposition: inline; filename="pasthis"');

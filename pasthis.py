@@ -25,7 +25,7 @@ import sys
 def get_parser():
     parser = argparse.ArgumentParser(description="Pasthis command line tool",
             epilog="Expiration period should be one of: burn,10m,1h,1d,1w,never.")
-    parser.add_argument("file", help="file to paste")
+    parser.add_argument("file", help="file to paste", nargs="?", default="-")
     parser.add_argument("-u", "--url", help="send paste to Pasthis at a given URL (default: https://__PASTHIS_DOMAIN_NAME__)",
             default="https://__PASTHIS_DOMAIN_NAME__")
     parser.add_argument("-e", "--expire", help="delete paste after a given period (default: 1d)",
@@ -35,17 +35,19 @@ def get_parser():
     return parser
 
 def get_file_content(path):
-    with open(path) as f:
-        return f.read()
+    if path == "-":
+        return sys.stdin.read()
+    else:
+        if not os.path.isfile(path):
+            return None
+
+        with open(path) as f:
+            return f.read()
     return None
 
 def main():
     parser = get_parser()
     args = parser.parse_args()
-
-    if not os.path.isfile(args.file):
-        print("File not found.")
-        return -1
 
     content = get_file_content(args.file)
     if content is None:

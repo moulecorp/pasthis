@@ -25,7 +25,7 @@ import sys
 def get_parser():
     parser = argparse.ArgumentParser(description="Pasthis command line tool",
             epilog="Expiration period should be one of: burn,10m,1h,1d,1w,never.")
-    parser.add_argument("file", help="file to paste", nargs="?", default="-")
+    parser.add_argument("file", help="file to paste or stdin (default: stdin)", nargs="?", default="-")
     parser.add_argument("-u", "--url", help="send paste to Pasthis at a given URL (default: https://__PASTHIS_DOMAIN_NAME__)",
             default="https://__PASTHIS_DOMAIN_NAME__")
     parser.add_argument("-e", "--expire", help="delete paste after a given period (default: 1d)",

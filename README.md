@@ -31,8 +31,10 @@ licensed under [GPLv2+](LICENSE).
      if needed.
    - Nginx: see the provided
      [nginx.conf](https://github.com/moulecorp/pasthis/blob/master/resources/nginx.conf).
-   - Caddy: see the provided
-     [Caddyfile](https://github.com/moulecorp/pasthis/blob/master/resources/Caddyfile).
+   - Caddy v1: see the provided
+     [Caddyfile](https://github.com/moulecorp/pasthis/blob/master/resources/Caddyfile.v1).
+   - Caddy v2: see the provided
+     [Caddyfile](https://github.com/moulecorp/pasthis/blob/master/resources/Caddyfile.v2).
 3. Make sure that the folder is _readable_ and _writable_ by www-data, since
    this is required by PHP to be able to create the SQLite database.
 

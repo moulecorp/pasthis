@@ -1,0 +1,14 @@
+@forbidden_files {
+	path /pasthis.db /pasthis.py /resources/*
+}
+respond @forbidden_files 403
+
+@static_files {
+	path /css/* /js/* robots.txt
+}
+file_server @static_files
+
+@paste {
+	path_regexp id ^/([a-zA-Z0-9]{6}(@raw)?)$
+}
+rewrite @paste /index.php?p={re.id.1}

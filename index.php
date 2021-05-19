@@ -80,7 +80,7 @@ final class Pasthis {
         print '<body>';
         print '<div class="container">';
         print '<h1>Pasthis</h1>';
-        while (list(, $ct) = each($this->contents))
+        foreach ($this->contents as $ct)
             print $ct;
         print '<div class="footer">';
         print 'Powered by <a href="https://github.com/moulecorp/pasthis">Pasthis</a> | ';

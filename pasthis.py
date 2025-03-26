@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #
-# Copyright (C) 2018 - 2020 Antoine Tenart <antoine.tenart@ack.tf>
+# Copyright (C) 2018 - 2025 Antoine Tenart <antoine.tenart@ack.tf>
 #
 # This program is free software; you can redistribute it and/or
 # modify it under the terms of the GNU General Public License

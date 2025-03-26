@@ -32,6 +32,7 @@ final class Pasthis {
         3600 => "1 hour",
         86400 => "1 day",
         604800 => "1 week",
+        2678400 => "1 month",
         -1 => "eternal",
     );
 

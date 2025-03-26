@@ -2,8 +2,8 @@
 /**
  *  Pasthis - Stupid Simple Pastebin
  *
- * Copyright (C) 2014 - 2020 Julien (jvoisin) Voisin - dustri.org
- * Copyright (C) 2014 - 2020 Antoine Tenart <antoine.tenart@ack.tf>
+ * Copyright (C) 2014 - 2025 Julien (jvoisin) Voisin - dustri.org
+ * Copyright (C) 2014 - 2025 Antoine Tenart <antoine.tenart@ack.tf>
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,6 +25,15 @@ final class Pasthis {
     public $title;
     private $contents = array();
     private $db;
+    private $default_expiration = 86400;
+    private $expirations = array(
+        -2 => "burn after reading",
+        600 => "10 minutes",
+        3600 => "1 hour",
+        86400 => "1 day",
+        604800 => "1 week",
+        -1 => "eternal",
+    );
 
     function __construct($title = 'Pasthis - Simple pastebin') {
         $this->title = $title;
@@ -119,15 +128,17 @@ final class Pasthis {
         $this->add_content(
             '<form method="post" action=".">
                  <div class="row">
-                     <select name="d">
-                         <option value="86400" selected hidden>Expiration (1 day)</option>
-                         <option value="-2">burn after reading</option>
-                         <option value="600">10 minutes</option>
-                         <option value="3600">1 hour</option>
-                         <option value="86400">1 day</option>
-                         <option value="604800">1 week</option>
-                         <option value="-1">eternal</option>
-                     </select>
+                     <select name="d">'
+        );
+        $this->add_content(
+                         '<option value="'.$this->default_expiration.'" selected hidden>Expiration ('.$this->expirations[$this->default_expiration].')</option>'
+        );
+        foreach ($this->expirations as $val => $text)
+                $this->add_content(
+                         '<option value="'.$val.'">'.$text.'</option>'
+                );
+        $this->add_content(
+                    '</select>
                      <button type="submit">Send paste</button>
                      <div class="right">
                          <label>
@@ -201,11 +212,16 @@ final class Pasthis {
             die('Spam');
     }
 
-    function add_paste($deletion_date, $highlighting, $wrap, $paste) {
+    function add_paste($expiration, $highlighting, $wrap, $paste) {
         $this->check_spammer();
 
-        $deletion_date = intval($deletion_date);
+        $expiration = intval($expiration);
+        if (!isset($this->expirations[$expiration])) {
+            header('location: ./');
+            return;
+        }
 
+        $deletion_date = $expiration;
         if ($deletion_date > 0)
             $deletion_date += time();
 
